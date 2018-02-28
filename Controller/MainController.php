@@ -1,6 +1,7 @@
 <?php
 
 require_once('Cool/BaseController.php');
+require_once('Model/LoginManager.php'); 
 
 class MainController extends BaseController
 {
