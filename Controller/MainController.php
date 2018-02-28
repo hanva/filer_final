@@ -26,8 +26,9 @@ class MainController extends BaseController
     $email = htmlentities($_POST['email']);
     $password = $_POST['password'];
     $password_repeat = $_POST['password_repeat'];
-        $formManager = new FormManager();
-        $formManager->Register($firstname,$lastname,$username,  $email, $password, $password_repeat);
+    $formManager = new FormManager();
+    $formManager->Register($firstname,$lastname,$username,  $email, $password, $password_repeat);
+
 }
 else{ 
         return $this->render('register.html.twig');
