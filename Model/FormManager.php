@@ -24,14 +24,17 @@ class FormManager
             $dataerrors[]="Passwords don't match";
         }
         else{
-          //  $creation = date('Y-m-d H:i:s');
-          //  mkdir("./files/".$username);
-            //$structure = './files/';
-            //$q = "INSERT INTO `users` (`id`, `creation`, `firstname`, `lastname`, `username`, `email`, `password`) VALUES (NULL, '".$creation."', '".$firstname."', '".$lastname."', '".$username."', '".$email."', '".$password."')";
-            //mysqli_query($link, $q);
-            header('Location: index.php');
-            exit();
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        $result = $pdo->prepare('INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `username`) VALUES (NULL, :firstname, :lastname, :email, :password, :username)');
+        $result->bindParam(':firstname', $firstname);
+        $result->bindParam(':lastname', $lastname);
+        $result->bindParam(':email', $email);
+        $result->bindParam(':password', $password);
+        $result->bindParam(':username', $username);
+        $result->execute();
+        header('Location: ?action=register');
+        exit();
         }
-        var_dump($dataerrors);
     }
 }
