@@ -16,7 +16,7 @@ class MainController extends BaseController
 
     public function registerAction()
     {
-        if (!empty($_POST['firstname']) && !empty($_POST['lastname'])
+    if (!empty($_POST['firstname']) && !empty($_POST['lastname'])
     && !empty($_POST['username']) && !empty($_POST['email'])
     && !empty($_POST['password']) && !empty($_POST['password_repeat']))
     {
@@ -27,10 +27,15 @@ class MainController extends BaseController
     $password = $_POST['password'];
     $password_repeat = $_POST['password_repeat'];
     $formManager = new FormManager();
-    $formManager->Register($firstname,$lastname,$username,  $email, $password, $password_repeat);
-
-}
-else{ 
+     if($formManager->CheckUsername($username)===true){
+        $formManager->Register($firstname,$lastname,$username,  $email, $password, $password_repeat);
+    }
+    else{
+        return $this->redirectToRoute('register');
+        } 
+    }
+        else{ 
         return $this->render('register.html.twig');
-    } }
+        } 
+    }
 }
