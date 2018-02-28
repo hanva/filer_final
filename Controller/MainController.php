@@ -27,7 +27,7 @@ class MainController extends BaseController
     $password = $_POST['password'];
     $password_repeat = $_POST['password_repeat'];
     $formManager = new FormManager();
-     if($formManager->CheckUsername($username)===true){
+    if($formManager->CheckUsername($username)===true){
         $formManager->Register($firstname,$lastname,$username,  $email, $password, $password_repeat);
     }
     else{
