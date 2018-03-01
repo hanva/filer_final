@@ -22,6 +22,7 @@ class FormManager
         $result = $pdo->query("SELECT password FROM users where username = '$username'");
         $posts = $result->fetch(PDO::FETCH_COLUMN, 0);
             if ($posts === $password){
+                $_SESSION['username'] =$username;
                 return true;
             }   
         return false;

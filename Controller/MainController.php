@@ -8,12 +8,16 @@ class MainController extends BaseController
     public function homeAction()
     {
         $data = [];
-        if  ($_SESSION['username'])
+        if(empty( $_SESSION['username'])===false){
             $data = [
                 'username' => $_SESSION['username']
             ];
         return $this->render('home.html.twig',$data);
+    } 
+    else{
+        return $this->render('home.html.twig');
     }
+  }
     public function disconnectAction()
     {
         session_destroy();
@@ -30,6 +34,12 @@ class MainController extends BaseController
         if($formManager->CheckUsername($username)===false && $formManager->CheckPassword($username,$password)){
             return $this->redirectToRoute('home');
             }
+            else{
+            $data = [
+                'errors' => "wrong username or password"
+            ];
+        }
+        return $this->render('login.html.twig',$data);
         }
         else{ 
             return $this->render('login.html.twig');
