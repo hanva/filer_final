@@ -8,13 +8,23 @@ class FormManager
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $result = $pdo->query("SELECT username FROM users");
-         $posts = $result->fetchAll(PDO::FETCH_COLUMN, 0);
+        $posts = $result->fetchAll(PDO::FETCH_COLUMN, 0);
         foreach ($posts as $value) {
             if ($value === $username){
             return false;
             }          
         }
         return true;
+    }
+    public function CheckPassword($username,$password){   
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        $result = $pdo->query("SELECT password FROM users where username = '$username'");
+        $posts = $result->fetch(PDO::FETCH_COLUMN, 0);
+            if ($posts === $password){
+                return true;
+            }   
+        return false;
     }
     public function Register($firstname,$lastname,$username,  $email, $password, $password_repeat)
     {

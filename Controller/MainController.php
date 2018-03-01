@@ -2,17 +2,40 @@
 
 require_once('Cool/BaseController.php');
 require_once('Model/FormManager.php');
-
+session_start();
 class MainController extends BaseController
 {
     public function homeAction()
     {
-        return $this->render('home.html.twig');
+        $data = [];
+        if  ($_SESSION['username'])
+            $data = [
+                'username' => $_SESSION['username']
+            ];
+        return $this->render('home.html.twig',$data);
     }
+    public function disconnectAction()
+    {
+        session_destroy();
+        return $this->redirectToRoute('home');
+    }
+
     public function loginAction()
     {
-        return $this->render('login.html.twig');
+        if (!empty($_POST['username']) && !empty($_POST['password']))
+        {
+        $username = htmlentities($_POST['username']);
+        $password = htmlentities($_POST['password']);
+        $formManager = new FormManager();
+        if($formManager->CheckUsername($username)===false && $formManager->CheckPassword($username,$password)){
+            return $this->redirectToRoute('home');
+            }
+        }
+        else{ 
+            return $this->render('login.html.twig');
+        }
     }
+
 
     public function registerAction()
     {
