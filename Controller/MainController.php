@@ -65,7 +65,7 @@ class MainController extends BaseController
                 $response = $formManager->Register($firstname, $lastname, $username, $email, $password, $password_repeat);
                 if ($response === true) {
                     $filesManager = new FilesManager();
-                    $filesManager->createFiles($username);
+                    $filesManager->createFolder($username);
                     return $this->redirectToRoute('login');
                 } else {
                     $data = [

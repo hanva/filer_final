@@ -4,7 +4,7 @@ require_once 'Cool/DBManager.php';
 
 class FilesManager
 {
-    public function createFiles($username)
+    public function createFolder($username)
     {
         mkdir("./files/" . $username);
     }
