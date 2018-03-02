@@ -10,8 +10,13 @@ class MainController extends BaseController
     {
         $data = [];
         if (empty($_SESSION['username']) === false) {
+            $filesManager = new FilesManager();
+            $response = $filesManager->seeFiles($_SESSION['username']);
+            $pathResponse = $filesManager->seePath($_SESSION['username']);
             $data = [
                 'username' => $_SESSION['username'],
+                'files' => $response,
+                'paths' => $pathResponse,
             ];
             return $this->render('home.html.twig', $data);
         } else {
