@@ -36,7 +36,7 @@ class MainController extends BaseController
     public function addfileAction()
     {
         if (!empty($_SESSION['username']) === false) {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home', $data);
         }
         if (!empty($_FILES)) {
             $filesManager = new FilesManager();
@@ -46,9 +46,19 @@ class MainController extends BaseController
             $filesManager->addFile($files, $title, $ext);
             return $this->redirectToRoute('home');
         }
-        return $this->render('addfile.html.twig');
-
+        $data = [
+            'username' => $_SESSION['username'],
+        ];
+        return $this->render('addfile.html.twig', $data);
     }
+    public function addfolderAction()
+    {
+        $filesManager = new FilesManager();
+        $data = $filesManager->seeFolder($_SESSION['username']);
+        $filesManager->addFolder($_SESSION['username'], $data);
+        return $this->redirectToRoute('home');
+    }
+
     public function deletefileAction()
     {
         $data = $_GET['filename'];

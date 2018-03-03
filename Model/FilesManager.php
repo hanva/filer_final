@@ -1,7 +1,5 @@
 <?php
-
 require_once 'Cool/DBManager.php';
-
 class FilesManager
 {
     public function createFolder($username)
@@ -62,5 +60,13 @@ class FilesManager
         die($file);
         $dir = './files/' . $_SESSION['username'] . '/';
         unlink($dir . $file);
+    }
+    public function addFolder($username, $data)
+    {
+        $count = 1;
+        foreach ($data as $value) {
+            $count++;
+        }
+        mkdir("./files/" . $username . "/folder" . $count);
     }
 }
