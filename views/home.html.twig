@@ -14,4 +14,9 @@
         <a download={{file}} href={{paths[foo]}}> {{file}}</a><br>
         {% set foo = foo + 1 %}
   {% endfor %}
+
+  {% for folder in folders %}
+    <a href={{paths[foo]}}>{{folder}}</a>
+  {% endfor %}
+
 {% endblock %}
