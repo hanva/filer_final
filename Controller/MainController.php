@@ -11,12 +11,14 @@ class MainController extends BaseController
         $data = [];
         if (empty($_SESSION['username']) === false) {
             $filesManager = new FilesManager();
-            $response = $filesManager->seeFiles($_SESSION['username']);
-            $pathResponse = $filesManager->seePath($_SESSION['username']);
+            $fileresponse = $filesManager->seeFiles($_SESSION['username']);
+            $pathResponse = $filesManager->seeFilesPaths($_SESSION['username']);
+            $folderResponse = $filesManager->seeFolder($_SESSION['username']);
             $data = [
                 'username' => $_SESSION['username'],
-                'files' => $response,
+                'files' => $fileresponse,
                 'paths' => $pathResponse,
+                'folders' => $folderResponse,
             ];
             return $this->render('home.html.twig', $data);
         } else {
@@ -25,8 +27,27 @@ class MainController extends BaseController
     }
     public function disconnectAction()
     {
+        if (!empty($_SESSION['username']) === false) {
+            return $this->redirectToRoute('home');
+        }
         session_destroy();
         return $this->redirectToRoute('home');
+    }
+    public function addfileAction()
+    {
+        if (!empty($_SESSION['username']) === false) {
+            return $this->redirectToRoute('home');
+        }
+        if (!empty($_FILES)) {
+            $filesManager = new FilesManager();
+            $files = $_FILES['userfile']['name'];
+            $title = $_POST['usertitle'];
+            $ext = pathinfo($files, PATHINFO_EXTENSION);
+            $filesManager->addFile($files, $title, $ext);
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('addfile.html.twig');
+
     }
 
     public function loginAction()
@@ -65,7 +86,7 @@ class MainController extends BaseController
                 $response = $formManager->Register($firstname, $lastname, $username, $email, $password, $password_repeat);
                 if ($response === true) {
                     $filesManager = new FilesManager();
-                    $filesManager->createFiles($username);
+                    $filesManager->createFolder($username);
                     return $this->redirectToRoute('login');
                 } else {
                     $data = [
