@@ -11,7 +11,9 @@
   <br>
   {% set foo =  0 %}
   {% for file in files %}
-        <a download={{file}} href={{paths[foo]}}> {{file}}</a><br>
+        <a download={{file}} href={{paths[foo]}}> {{file}}</a>
+        <a name="filename"  id="filename" href='?action=deletefile' value='{{file}}'>❌</a>
+        <br>
         {% set foo = foo + 1 %}
   {% endfor %}
 

@@ -8,11 +8,14 @@
   <body>
   <header>
     <nav>
+    {% if username is defined %}
       <a href="?action=home">home</a>
+      <a href="?action=addfile">addfile</a>
+      <a href="?action=disconnect">disconnect</a>
+      {% else %}
       <a href="?action=login">login</a>
       <a href="?action=register">register</a>
-      <a href="?action=disconnect">disconnect</a>
-      <a href="?action=addfile">addfile</a>
+      {% endif %}
     </nav>
   </header>
     {% block content %}{% endblock %}

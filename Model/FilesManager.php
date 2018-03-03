@@ -57,4 +57,10 @@ class FilesManager
         move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
         var_dump($_FILES['userfile']['tmp_name']);
     }
+    public function deleteFile($file)
+    {
+        die($file);
+        $dir = './files/' . $_SESSION['username'] . '/';
+        unlink($dir . $file);
+    }
 }

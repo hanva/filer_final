@@ -49,6 +49,13 @@ class MainController extends BaseController
         return $this->render('addfile.html.twig');
 
     }
+    public function deletefileAction()
+    {
+        $data = $_GET['filename'];
+        $filesManager = new FilesManager();
+        $filesManager->deleteFile($data);
+        return $this->redirectToRoute('home');
+    }
 
     public function loginAction()
     {
