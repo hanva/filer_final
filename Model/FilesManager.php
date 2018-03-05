@@ -57,7 +57,6 @@ class FilesManager
         $uploaddir = './files/' . $username . '/';
         $uploadfile = $uploaddir . basename($files);
         move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
-        var_dump($_FILES['userfile']['tmp_name']);
     }
     public function deleteFile($path, $file)
     {
@@ -76,5 +75,14 @@ class FilesManager
             $count++;
         }
         mkdir("./files/" . $username . "/folder" . $count);
+    }
+    public function rename($data, $ext, $olddata)
+    {
+        $dir = './files/' . $_SESSION['username'] . '/';
+        if (strlen($ext) === 0) {
+            rename($dir . $olddata, $dir . $data);
+        } else {
+            rename($dir . $olddata, $dir . $data . "." . $ext);
+        }
     }
 }
