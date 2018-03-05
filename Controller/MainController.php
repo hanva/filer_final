@@ -10,6 +10,17 @@ class MainController extends BaseController
     {
         $data = [];
         if (empty($_SESSION['username']) === false) {
+
+            if (empty($_GET['deletefile']) === false) {
+                $data = $_GET['deletefile'];
+                $filesManager = new FilesManager();
+                if (pathinfo($data, PATHINFO_EXTENSION) === "") {
+                    $filesManager->deleteFolder($data);
+                } else {
+                    $filesManager->deleteFile($data);
+                }
+                return $this->redirectToRoute('home');
+            }
             $filesManager = new FilesManager();
             $fileresponse = $filesManager->seeFiles($_SESSION['username']);
             $pathResponse = $filesManager->seeFilesPaths($_SESSION['username']);
@@ -61,9 +72,9 @@ class MainController extends BaseController
 
     public function deletefileAction()
     {
-        $data = $_GET['filename'];
-        $filesManager = new FilesManager();
-        $filesManager->deleteFile($data);
+        //  $data = $_GET['deletefile'];
+        //$filesManager = new FilesManager();
+        //$filesManager->deleteFile($data);
         return $this->redirectToRoute('home');
     }
 
