@@ -8,23 +8,26 @@ class MainController extends BaseController
 {
     public function homeAction()
     {
+        $path = "";
         $data = [];
         if (empty($_SESSION['username']) === false) {
-
             if (empty($_GET['deletefile']) === false) {
                 $data = $_GET['deletefile'];
                 $filesManager = new FilesManager();
                 if (pathinfo($data, PATHINFO_EXTENSION) === "") {
-                    $filesManager->deleteFolder($data);
+                    $filesManager->deleteFolder($path, $data);
                 } else {
-                    $filesManager->deleteFile($data);
+                    $filesManager->deleteFile($path, $data);
                 }
                 return $this->redirectToRoute('home');
             }
+            if (empty($_GET['path']) === false) {
+                $path = $_GET['path'] . "/";
+            }
             $filesManager = new FilesManager();
-            $fileresponse = $filesManager->seeFiles($_SESSION['username']);
-            $pathResponse = $filesManager->seeFilesPaths($_SESSION['username']);
-            $folderResponse = $filesManager->seeFolder($_SESSION['username']);
+            $fileresponse = $filesManager->seeFiles($_SESSION['username'], $path);
+            $pathResponse = $filesManager->seeFilesPaths($_SESSION['username'], $path);
+            $folderResponse = $filesManager->seeFolder($_SESSION['username'], $path);
             $data = [
                 'username' => $_SESSION['username'],
                 'files' => $fileresponse,
@@ -64,20 +67,12 @@ class MainController extends BaseController
     }
     public function addfolderAction()
     {
+        $path = "";
         $filesManager = new FilesManager();
-        $data = $filesManager->seeFolder($_SESSION['username']);
+        $data = $filesManager->seeFolder($_SESSION['username'], $path);
         $filesManager->addFolder($_SESSION['username'], $data);
         return $this->redirectToRoute('home');
     }
-
-    public function deletefileAction()
-    {
-        //  $data = $_GET['deletefile'];
-        //$filesManager = new FilesManager();
-        //$filesManager->deleteFile($data);
-        return $this->redirectToRoute('home');
-    }
-
     public function loginAction()
     {
         if (!empty($_POST['username']) && !empty($_POST['password'])) {

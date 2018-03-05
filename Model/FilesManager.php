@@ -6,10 +6,10 @@ class FilesManager
     {
         mkdir("./files/" . $username);
     }
-    public function seeFiles($username)
+    public function seeFiles($username, $path)
     {
         $data = [];
-        $dir = './files/' . $_SESSION['username'] . '/';
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
 
@@ -19,10 +19,10 @@ class FilesManager
         }
         return $data;
     }
-    public function seeFilesPaths($username)
+    public function seeFilesPaths($username, $path)
     {
         $data = [];
-        $dir = './files/' . $_SESSION['username'] . '/';
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
             if (is_file($dir . $value) === true) {
@@ -31,10 +31,14 @@ class FilesManager
         }
         return $data;
     }
-    public function seeFolder($username)
+    public function navInto($data)
+    {
+
+    }
+    public function seeFolder($username, $path)
     {
         $data = [];
-        $dir = './files/' . $_SESSION['username'] . '/';
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
             if (is_file($dir . $value) === false) {
@@ -55,14 +59,14 @@ class FilesManager
         move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
         var_dump($_FILES['userfile']['tmp_name']);
     }
-    public function deleteFile($file)
+    public function deleteFile($path, $file)
     {
-        $dir = './files/' . $_SESSION['username'] . '/';
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
         unlink($dir . $file);
     }
-    public function deleteFolder($file)
+    public function deleteFolder($path, $file)
     {
-        $dir = './files/' . $_SESSION['username'] . '/';
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
         rmdir($dir . $file);
     }
     public function addFolder($username, $data)
