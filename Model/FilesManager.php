@@ -57,7 +57,6 @@ class FilesManager
     }
     public function deleteFile($file)
     {
-        die($file);
         $dir = './files/' . $_SESSION['username'] . '/';
         unlink($dir . $file);
     }
