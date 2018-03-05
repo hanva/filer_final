@@ -47,6 +47,28 @@ class MainController extends BaseController
         session_destroy();
         return $this->redirectToRoute('home');
     }
+    public function renameAction()
+    {
+        if (isset($_POST['newname'])) {
+            if (!empty($_POST['newname'] === true)) {
+            } else {
+                $ext = pathinfo($_POST['oldname'], PATHINFO_EXTENSION);
+                $olddata = $_POST['oldname'];
+                $data = $_POST['newname'];
+                $filesManager = new FilesManager();
+                $filesManager->rename($data, $ext, $olddata);
+            }
+        }
+
+        if (empty($_GET['name']) === true) {
+            return $this->redirectToRoute('home');
+        } else {
+            $data = [
+                'file' => $_GET['name'],
+            ];
+            return $this->render('rename.html.twig', $data);
+        }
+    }
     public function addfileAction()
     {
         if (!empty($_SESSION['username']) === false) {

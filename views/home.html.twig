@@ -13,13 +13,20 @@
   {% for file in files %}
         <a download={{file}} href={{paths[foo]}}> {{file}}</a>
         <a href='?action=home&deletefile={{file}}'>❌</a>
+         <a href='?action=rename&name={{file}}'> 🖊</a>
         <br>
         {% set foo = foo + 1 %}
   {% endfor %}
 
-  {% for folder in folders %}
-    <a href='?action=home&path={{folder}}'>{{folder}}</a>
-    <a href='?action=home&deletefile={{folder}}'>❌</a>
+    {% for folder in folders %}
+    {% if folderpaths is defined %}
+      <a href='?action=home&path={{folderpaths}}{{folder}}'>{{folder}}</a>
+      <a href='?action=home&deletefile={{folderpaths}}{{folder}}'>❌</a>
+    {% else %}
+      <a href='?action=home&path={{folder}}'>{{folder}}</a>
+      <a href='?action=home&deletefile={{folder}}'> ❌</a>
+      <a href='?action=rename&name={{folder}}'> 🖊</a>
+    {% endif %}
   {% endfor %}
 
 {% endblock %}
