@@ -60,6 +60,11 @@ class FilesManager
         $dir = './files/' . $_SESSION['username'] . '/';
         unlink($dir . $file);
     }
+    public function deleteFolder($file)
+    {
+        $dir = './files/' . $_SESSION['username'] . '/';
+        rmdir($dir . $file);
+    }
     public function addFolder($username, $data)
     {
         $count = 1;

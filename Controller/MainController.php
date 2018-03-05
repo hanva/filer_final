@@ -10,10 +10,15 @@ class MainController extends BaseController
     {
         $data = [];
         if (empty($_SESSION['username']) === false) {
+
             if (empty($_GET['deletefile']) === false) {
                 $data = $_GET['deletefile'];
                 $filesManager = new FilesManager();
-                $filesManager->deleteFile($data);
+                if (pathinfo($data, PATHINFO_EXTENSION) === "") {
+                    $filesManager->deleteFolder($data);
+                } else {
+                    $filesManager->deleteFile($data);
+                }
                 return $this->redirectToRoute('home');
             }
             $filesManager = new FilesManager();
