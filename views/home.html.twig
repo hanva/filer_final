@@ -17,16 +17,10 @@
         <br>
         {% set foo = foo + 1 %}
   {% endfor %}
-  <input type="hidden" value={{path}}>
     {% for folder in folders %}
-    {% if folderpaths is defined %}
-      <a href='?action=home&path={{folderpaths}}{{folder}}'>{{folder}}</a>
-      <a href='?action=home&deletefile={{folderpaths}}{{folder}}'>❌</a>
-    {% else %}
       <a href='?action=home&path={{folder}}'>{{folder}}</a>
-      <a href='?action=home&deletefile={{folder}}'> ❌</a>
-      <a href='?action=rename&name={{folder}}'> 🖊</a>
-    {% endif %}
+      <a href='?action=home&path={{path}}&deletefile={{folder}}'> ❌</a>
+      <a href='?action=rename&path={{path}}&name={{folder}}'> 🖊</a>
   {% endfor %}
 
 {% endblock %}

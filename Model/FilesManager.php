@@ -61,7 +61,7 @@ class FilesManager
 
     public function deleteFolder($path, $file)
     {
-        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/' . $file;
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . $file;
         $objects = scandir($dir);
         foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
@@ -83,7 +83,11 @@ class FilesManager
         foreach ($data as $value) {
             $count++;
         }
-        mkdir("./files/" . $username . '/' . $path . "/folder" . $count);
+        if (file_exists("./files/" . $username . '/' . $path . "/folder" . $count)) {
+            $count++;
+            mkdir("./files/" . $username . '/' . $path . "/folder" . $count);
+        } else {
+            mkdir("./files/" . $username . '/' . $path . "/folder" . $count);}
     }
     public function rename($data, $ext, $olddata, $path)
     {

@@ -10,6 +10,9 @@ class MainController extends BaseController
     {
         global $path;
         $data = [];
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+        }
         if (empty($_SESSION['username']) === false) {
             if (empty($_GET['deletefile']) === false) {
                 $data = $_GET['deletefile'];
@@ -21,9 +24,6 @@ class MainController extends BaseController
                 }
                 return $this->redirectToRoute('home');
             }
-            if (empty($_GET['path']) === false) {
-                $path = $_GET['path'] . "/";
-            }
             $filesManager = new FilesManager();
             $fileresponse = $filesManager->seeFiles($_SESSION['username'], $path);
             $pathResponse = $filesManager->seeFilesPaths($_SESSION['username'], $path);
@@ -33,7 +33,7 @@ class MainController extends BaseController
                 'files' => $fileresponse,
                 'paths' => $pathResponse,
                 'folders' => $folderResponse,
-                'path' => $path,
+                'path' => $path . '/',
             ];
             return $this->render('home.html.twig', $data);
         } else {
@@ -106,7 +106,13 @@ class MainController extends BaseController
         $filesManager = new FilesManager();
         $data = $filesManager->seeFolder($_SESSION['username'], $path);
         $filesManager->addFolder($path, $_SESSION['username'], $data);
-        return $this->redirectToRoute('home');
+        $path = substr($path, 0, -2);
+        if (strlen($path) > 1) {
+            return $this->redirectToRoute('home' . '&path=' . $path);
+        } else {
+            return $this->redirectToRoute('home');
+        }
+
     }
     public function loginAction()
     {
