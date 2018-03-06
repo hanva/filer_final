@@ -54,14 +54,17 @@ class MainController extends BaseController
     public function renameAction()
     {
         global $path;
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+        }
         if (isset($_POST['newname'])) {
             if (!empty($_POST['newname'] === true)) {
             } else {
                 $ext = pathinfo($_POST['oldname'], PATHINFO_EXTENSION);
                 $olddata = $_POST['oldname'];
                 $data = $_POST['newname'];
-                if (empty($_GET['path']) === false) {
-                    $path = $_GET['path'] . "/";
+                if (empty($_POST['path']) === false) {
+                    $path = $_POST['path'];
                 }
                 $filesManager = new FilesManager();
                 $filesManager->rename($data, $ext, $olddata, $path);
@@ -74,7 +77,7 @@ class MainController extends BaseController
             $data = [
                 'file' => $_GET['name'],
                 'username' => $_SESSION['username'],
-                'path' => $path . '/',
+                'path' => $path,
             ];
             return $this->render('rename.html.twig', $data);
         }
@@ -96,7 +99,11 @@ class MainController extends BaseController
             $ext = pathinfo($files, PATHINFO_EXTENSION);
             $path = $_POST['path'];
             $filesManager->addFile($path, $files, $title, $ext);
-            return $this->redirectToRoute('home');
+            if (strlen($path) > 1) {
+                return $this->redirectToRoute('home' . '&path=' . $path);
+            } else {
+                return $this->redirectToRoute('home');
+            }
         }
         $data = [
             'username' => $_SESSION['username'],
