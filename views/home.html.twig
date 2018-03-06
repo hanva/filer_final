@@ -17,7 +17,7 @@
         <br>
         {% set foo = foo + 1 %}
   {% endfor %}
-
+  <input type="hidden" value={{path}}>
     {% for folder in folders %}
     {% if folderpaths is defined %}
       <a href='?action=home&path={{folderpaths}}{{folder}}'>{{folder}}</a>

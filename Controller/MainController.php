@@ -33,6 +33,7 @@ class MainController extends BaseController
                 'files' => $fileresponse,
                 'paths' => $pathResponse,
                 'folders' => $folderResponse,
+                'path' => $path,
             ];
             return $this->render('home.html.twig', $data);
         } else {
@@ -49,14 +50,18 @@ class MainController extends BaseController
     }
     public function renameAction()
     {
+        global $path;
         if (isset($_POST['newname'])) {
             if (!empty($_POST['newname'] === true)) {
             } else {
                 $ext = pathinfo($_POST['oldname'], PATHINFO_EXTENSION);
                 $olddata = $_POST['oldname'];
                 $data = $_POST['newname'];
+                if (empty($_GET['path']) === false) {
+                    $path = $_GET['path'] . "/";
+                }
                 $filesManager = new FilesManager();
-                $filesManager->rename($data, $ext, $olddata);
+                $filesManager->rename($data, $ext, $olddata, $path);
             }
         }
 
@@ -72,6 +77,7 @@ class MainController extends BaseController
     }
     public function addfileAction()
     {
+        global $path;
         if (!empty($_SESSION['username']) === false) {
             return $this->redirectToRoute('home', $data);
         }
@@ -80,7 +86,10 @@ class MainController extends BaseController
             $files = $_FILES['userfile']['name'];
             $title = $_POST['usertitle'];
             $ext = pathinfo($files, PATHINFO_EXTENSION);
-            $filesManager->addFile($files, $title, $ext);
+            if (empty($_GET['path']) === false) {
+                $path = $_GET['path'] . "/";
+            }
+            $filesManager->addFile($path, $files, $title, $ext);
             return $this->redirectToRoute('home');
         }
         $data = [
@@ -91,9 +100,12 @@ class MainController extends BaseController
     public function addfolderAction()
     {
         global $path;
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'] . "/";
+        }
         $filesManager = new FilesManager();
         $data = $filesManager->seeFolder($_SESSION['username'], $path);
-        $filesManager->addFolder($_SESSION['username'], $data);
+        $filesManager->addFolder($path, $_SESSION['username'], $data);
         return $this->redirectToRoute('home');
     }
     public function loginAction()

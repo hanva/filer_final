@@ -43,13 +43,13 @@ class FilesManager
         }
         return $data;
     }
-    public function addFile($files, $title, $ext)
+    public function addFile($path, $files, $title, $ext)
     {
         if ($title !== "") {
             $files = $title . "." . $ext;
         }
         $username = $_SESSION['username'];
-        $uploaddir = './files/' . $username . '/';
+        $uploaddir = './files/' . $username . '/' . $path;
         $uploadfile = $uploaddir . basename($files);
         move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
     }
@@ -61,7 +61,7 @@ class FilesManager
 
     public function deleteFolder($path, $file)
     {
-        $dir = './files/' . $_SESSION['username'] . '/' . $file;
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/' . $file;
         $objects = scandir($dir);
         foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
@@ -77,17 +77,17 @@ class FilesManager
         }
         rmdir($dir);
     }
-    public function addFolder($username, $data)
+    public function addFolder($path, $username, $data)
     {
         $count = 1;
         foreach ($data as $value) {
             $count++;
         }
-        mkdir("./files/" . $username . "/folder" . $count);
+        mkdir("./files/" . $username . '/' . $path . "/folder" . $count);
     }
-    public function rename($data, $ext, $olddata)
+    public function rename($data, $ext, $olddata, $path)
     {
-        $dir = './files/' . $_SESSION['username'] . '/';
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
         if (strlen($ext) === 0) {
             rename($dir . $olddata, $dir . $data);
         } else {
