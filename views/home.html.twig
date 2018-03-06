@@ -13,7 +13,7 @@
   {% for file in files %}
         <a download={{file}} href={{paths[foo]}}> {{file}}</a>
         <a href='?action=home&deletefile={{file}}'>❌</a>
-         <a href='?action=rename&name={{file}}'> 🖊</a>
+        <a href='?action=rename&name={{file}}'> 🖊</a>
         <br>
         {% set foo = foo + 1 %}
   {% endfor %}

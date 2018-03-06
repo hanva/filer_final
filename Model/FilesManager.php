@@ -12,7 +12,6 @@ class FilesManager
         $dir = './files/' . $_SESSION['username'] . '/' . $path;
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
-
             if (is_file($dir . $value) === true) {
                 array_push($data, $value);
             };
@@ -30,10 +29,6 @@ class FilesManager
             }
         }
         return $data;
-    }
-    public function navInto($data)
-    {
-
     }
     public function seeFolder($username, $path)
     {
@@ -63,10 +58,24 @@ class FilesManager
         $dir = './files/' . $_SESSION['username'] . '/' . $path;
         unlink($dir . $file);
     }
+
     public function deleteFolder($path, $file)
     {
-        $dir = './files/' . $_SESSION['username'] . '/' . $path;
-        rmdir($dir . $file);
+        $dir = './files/' . $_SESSION['username'] . '/' . $file;
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (filetype($dir . "/" . $object) == "dir") {
+                    $diro = ($file . '/' . $object);
+                    $filesManager = new FilesManager();
+                    $filesManager->deleteFolder($path, $diro);
+                    rmdir($dir . "/" . $object);
+                } else {
+                    unlink($dir . "/" . $object);
+                }
+            }
+        }
+        rmdir($dir);
     }
     public function addFolder($username, $data)
     {

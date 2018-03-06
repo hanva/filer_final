@@ -8,7 +8,7 @@ class MainController extends BaseController
 {
     public function homeAction()
     {
-        $path = "";
+        global $path;
         $data = [];
         if (empty($_SESSION['username']) === false) {
             if (empty($_GET['deletefile']) === false) {
@@ -65,6 +65,7 @@ class MainController extends BaseController
         } else {
             $data = [
                 'file' => $_GET['name'],
+                'username' => $_SESSION['username'],
             ];
             return $this->render('rename.html.twig', $data);
         }
@@ -89,7 +90,7 @@ class MainController extends BaseController
     }
     public function addfolderAction()
     {
-        $path = "";
+        global $path;
         $filesManager = new FilesManager();
         $data = $filesManager->seeFolder($_SESSION['username'], $path);
         $filesManager->addFolder($_SESSION['username'], $data);
