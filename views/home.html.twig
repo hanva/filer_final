@@ -18,7 +18,7 @@
         {% set foo = foo + 1 %}
   {% endfor %}
     {% for folder in folders %}
-      <a href='?action=home&path={{folder}}'>{{folder}}</a>
+      <a href='?action=home&path={{path}}{{folder}}'>{{folder}}</a>
       <a href='?action=home&path={{path}}&deletefile={{folder}}'> ❌</a>
       <a href='?action=rename&path={{path}}&name={{folder}}'> 🖊</a>
   {% endfor %}
