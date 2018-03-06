@@ -14,7 +14,6 @@ class MainController extends BaseController
             $path = $_GET['path'];
         }
         $parentpath = rtrim($path, "/");
-        var_dump($parentpath);
         if (empty($_SESSION['username']) === false) {
             if (empty($_GET['deletefile']) === false) {
                 $data = $_GET['deletefile'];
@@ -68,9 +67,13 @@ class MainController extends BaseController
                 }
                 $filesManager = new FilesManager();
                 $filesManager->rename($data, $ext, $olddata, $path);
+                if (strlen($path) > 1) {
+                    return $this->redirectToRoute('home' . '&path=' . $path);
+                } else {
+                    return $this->redirectToRoute('home');
+                }
             }
         }
-
         if (empty($_GET['name']) === true) {
             return $this->redirectToRoute('home');
         } else {
