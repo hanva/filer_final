@@ -8,8 +8,13 @@ class MainController extends BaseController
 {
     public function homeAction()
     {
-        $path = "";
+        global $path;
         $data = [];
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+        }
+        $parentpath = rtrim($path, "/");
+        var_dump($parentpath);
         if (empty($_SESSION['username']) === false) {
             if (empty($_GET['deletefile']) === false) {
                 $data = $_GET['deletefile'];
@@ -21,9 +26,6 @@ class MainController extends BaseController
                 }
                 return $this->redirectToRoute('home');
             }
-            if (empty($_GET['path']) === false) {
-                $path = $_GET['path'] . "/";
-            }
             $filesManager = new FilesManager();
             $fileresponse = $filesManager->seeFiles($_SESSION['username'], $path);
             $pathResponse = $filesManager->seeFilesPaths($_SESSION['username'], $path);
@@ -33,6 +35,8 @@ class MainController extends BaseController
                 'files' => $fileresponse,
                 'paths' => $pathResponse,
                 'folders' => $folderResponse,
+                'path' => $path . '/',
+                'parentpath', $parentpath,
             ];
             return $this->render('home.html.twig', $data);
         } else {
@@ -49,14 +53,18 @@ class MainController extends BaseController
     }
     public function renameAction()
     {
+        global $path;
         if (isset($_POST['newname'])) {
             if (!empty($_POST['newname'] === true)) {
             } else {
                 $ext = pathinfo($_POST['oldname'], PATHINFO_EXTENSION);
                 $olddata = $_POST['oldname'];
                 $data = $_POST['newname'];
+                if (empty($_GET['path']) === false) {
+                    $path = $_GET['path'] . "/";
+                }
                 $filesManager = new FilesManager();
-                $filesManager->rename($data, $ext, $olddata);
+                $filesManager->rename($data, $ext, $olddata, $path);
             }
         }
 
@@ -65,12 +73,19 @@ class MainController extends BaseController
         } else {
             $data = [
                 'file' => $_GET['name'],
+                'username' => $_SESSION['username'],
+                'path' => $path . '/',
             ];
             return $this->render('rename.html.twig', $data);
         }
     }
     public function addfileAction()
     {
+
+        global $path;
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+        }
         if (!empty($_SESSION['username']) === false) {
             return $this->redirectToRoute('home', $data);
         }
@@ -79,21 +94,32 @@ class MainController extends BaseController
             $files = $_FILES['userfile']['name'];
             $title = $_POST['usertitle'];
             $ext = pathinfo($files, PATHINFO_EXTENSION);
-            $filesManager->addFile($files, $title, $ext);
+            $path = $_POST['path'];
+            $filesManager->addFile($path, $files, $title, $ext);
             return $this->redirectToRoute('home');
         }
         $data = [
             'username' => $_SESSION['username'],
+            'path' => $path,
         ];
         return $this->render('addfile.html.twig', $data);
     }
     public function addfolderAction()
     {
-        $path = "";
+        global $path;
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'] . "/";
+        }
         $filesManager = new FilesManager();
         $data = $filesManager->seeFolder($_SESSION['username'], $path);
-        $filesManager->addFolder($_SESSION['username'], $data);
-        return $this->redirectToRoute('home');
+        $filesManager->addFolder($path, $_SESSION['username'], $data);
+        $path = substr($path, 0, -2);
+        if (strlen($path) > 1) {
+            return $this->redirectToRoute('home' . '&path=' . $path);
+        } else {
+            return $this->redirectToRoute('home');
+        }
+
     }
     public function loginAction()
     {

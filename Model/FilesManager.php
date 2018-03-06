@@ -12,7 +12,6 @@ class FilesManager
         $dir = './files/' . $_SESSION['username'] . '/' . $path;
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
-
             if (is_file($dir . $value) === true) {
                 array_push($data, $value);
             };
@@ -31,10 +30,6 @@ class FilesManager
         }
         return $data;
     }
-    public function navInto($data)
-    {
-
-    }
     public function seeFolder($username, $path)
     {
         $data = [];
@@ -48,13 +43,13 @@ class FilesManager
         }
         return $data;
     }
-    public function addFile($files, $title, $ext)
+    public function addFile($path, $files, $title, $ext)
     {
         if ($title !== "") {
             $files = $title . "." . $ext;
         }
         $username = $_SESSION['username'];
-        $uploaddir = './files/' . $username . '/';
+        $uploaddir = './files/' . $username . '/' . $path;
         $uploadfile = $uploaddir . basename($files);
         move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
     }
@@ -63,22 +58,41 @@ class FilesManager
         $dir = './files/' . $_SESSION['username'] . '/' . $path;
         unlink($dir . $file);
     }
+
     public function deleteFolder($path, $file)
     {
-        $dir = './files/' . $_SESSION['username'] . '/' . $path;
-        rmdir($dir . $file);
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . $file;
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (filetype($dir . "/" . $object) == "dir") {
+                    $diro = ($file . '/' . $object);
+                    $filesManager = new FilesManager();
+                    $filesManager->deleteFolder($path, $diro);
+                    rmdir($dir . "/" . $object);
+                } else {
+                    unlink($dir . "/" . $object);
+                }
+            }
+        }
+        rmdir($dir);
     }
-    public function addFolder($username, $data)
+    public function addFolder($path, $username, $data)
     {
         $count = 1;
         foreach ($data as $value) {
             $count++;
         }
-        mkdir("./files/" . $username . "/folder" . $count);
+        if (file_exists("./files/" . $username . '/' . $path . "/folder" . $count)) {
+            $count++;
+            mkdir("./files/" . $username . '/' . $path . "/folder" . $count);
+        } else {
+            mkdir("./files/" . $username . '/' . $path . "/folder" . $count);}
     }
-    public function rename($data, $ext, $olddata)
+    public function rename($data, $ext, $olddata, $path)
     {
-        $dir = './files/' . $_SESSION['username'] . '/';
+        $die($path);
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
         if (strlen($ext) === 0) {
             rename($dir . $olddata, $dir . $data);
         } else {

@@ -8,10 +8,11 @@
   <body>
   <header>
     <nav>
+    <input type="hidden" value={{path}}>
     {% if username is defined %}
       <a href="?action=home">home</a>
-      <a href="?action=addfile">addfile</a>
-      <a href="?action=addfolder">addfolder</a>
+      <a href='?action=addfile&path={{path}}'>addfile</a>
+      <a href='?action=addfolder&path={{path}}'>addfolder</a>
       <a href="?action=disconnect">disconnect</a><br>
       {% else %}
       <a href="?action=login">login</a>
