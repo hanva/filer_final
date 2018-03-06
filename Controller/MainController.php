@@ -13,6 +13,8 @@ class MainController extends BaseController
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
         }
+        $parentpath = rtrim($path, "/");
+        var_dump($parentpath);
         if (empty($_SESSION['username']) === false) {
             if (empty($_GET['deletefile']) === false) {
                 $data = $_GET['deletefile'];
@@ -34,6 +36,7 @@ class MainController extends BaseController
                 'paths' => $pathResponse,
                 'folders' => $folderResponse,
                 'path' => $path . '/',
+                'parentpath', $parentpath,
             ];
             return $this->render('home.html.twig', $data);
         } else {
@@ -71,13 +74,18 @@ class MainController extends BaseController
             $data = [
                 'file' => $_GET['name'],
                 'username' => $_SESSION['username'],
+                'path' => $path . '/',
             ];
             return $this->render('rename.html.twig', $data);
         }
     }
     public function addfileAction()
     {
+
         global $path;
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+        }
         if (!empty($_SESSION['username']) === false) {
             return $this->redirectToRoute('home', $data);
         }
@@ -86,14 +94,13 @@ class MainController extends BaseController
             $files = $_FILES['userfile']['name'];
             $title = $_POST['usertitle'];
             $ext = pathinfo($files, PATHINFO_EXTENSION);
-            if (empty($_GET['path']) === false) {
-                $path = $_GET['path'] . "/";
-            }
+            $path = $_POST['path'];
             $filesManager->addFile($path, $files, $title, $ext);
             return $this->redirectToRoute('home');
         }
         $data = [
             'username' => $_SESSION['username'],
+            'path' => $path,
         ];
         return $this->render('addfile.html.twig', $data);
     }

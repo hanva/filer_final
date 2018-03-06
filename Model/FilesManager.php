@@ -91,6 +91,7 @@ class FilesManager
     }
     public function rename($data, $ext, $olddata, $path)
     {
+        $die($path);
         $dir = './files/' . $_SESSION['username'] . '/' . $path;
         if (strlen($ext) === 0) {
             rename($dir . $olddata, $dir . $data);
