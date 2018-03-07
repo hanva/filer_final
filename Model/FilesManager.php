@@ -9,7 +9,7 @@ class FilesManager
     public function seeFiles($username, $path)
     {
         $data = [];
-        $dir = './files/' . $_SESSION['username'] . '/' . $path;
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/';
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
             if (is_file($dir . $value) === true) {
@@ -21,7 +21,7 @@ class FilesManager
     public function seeFilesPaths($username, $path)
     {
         $data = [];
-        $dir = './files/' . $_SESSION['username'] . '/' . $path;
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/';
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
             if (is_file($dir . $value) === true) {
@@ -33,7 +33,7 @@ class FilesManager
     public function seeFolder($username, $path)
     {
         $data = [];
-        $dir = './files/' . $_SESSION['username'] . '/' . $path;
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/';
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
             if (is_file($dir . $value) === false) {
