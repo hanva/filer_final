@@ -8,6 +8,7 @@ move {{file}} into
  {% for folder in folders %}
     <option> {{folder}}</option>
   {% endfor %}
+   <option>home</option>
   </select><br>
   <button type="submit" class="btn btn-primary">Move</button>
 <input name="path" type="hidden" value='{{path}}'>

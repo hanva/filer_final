@@ -126,19 +126,30 @@ class MainController extends BaseController
     public function moveAction()
     {
         global $path;
+        $filesManager = new FilesManager();
         $data = [];
-        if (empty($_POST['folders']) !== true) {
-            $finalfolder = $_POST['folders'];
+        if (empty($_POST['folders']) === false) {
             $name = $_POST['name'];
-            $finalpath = $_POST['name'];
-            $filesManager = new FilesManager();
-            $folderpath = $filesManager->Pathfor($_SESSION['username'], $path, $finalfolder);
+            $finalfolder = $_POST['folders'];
+            if ($finalfolder === 'home') {
+                $folderpath = './files/' . $_SESSION['username'];
+                $path = $_POST['path'];
+                $filesManager->moveInto($finalfolder, $path, $name, $folderpath);
+                return $this->redirectToRoute('home');
+            }
+            $folderpath = $filesManager->Pathfor($_SESSION['username'], $path, $finalfolder, $data);
+            foreach ($folderpath as $value) {
+                if (basename($value) === $finalfolder) {
+                    $folderpath = $value;
+                }
+            }
             $path = $_POST['path'];
             $filesManager->moveInto($finalfolder, $path, $name, $folderpath);
             return $this->redirectToRoute('home');
         } else {
+            $name = $_GET['name'];
             $filesManager = new FilesManager();
-            $folders = $filesManager->seeAllFolder($_SESSION['username'], $path, $data);
+            $folders = $filesManager->seeAllFolder($_SESSION['username'], $path, $data, $name);
             if (empty($_GET['path']) === false) {
                 $path = $_GET['path'];
             }

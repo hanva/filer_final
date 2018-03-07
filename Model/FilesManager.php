@@ -43,32 +43,33 @@ class FilesManager
         }
         return $data;
     }
-    public function seeAllFolder($username, $path, $data)
+    public function seeAllFolder($username, $path, $data, $name)
     {
         $dir = './files/' . $_SESSION['username'] . $path . '/';
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
             if (is_dir($dir . $value)) {
                 $filesManager = new FilesManager();
-                $data = $filesManager->seeAllFolder($username, $path . '/' . $value, $data);
-                array_push($data, $value);
+                $data = $filesManager->seeAllFolder($username, $path . '/' . $value, $data, $name);
+                if ($value !== $name) {
+                    array_push($data, $value);
+                }
             }
         }
         return $data;
     }
-    public function Pathfor($username, $path, $finalfolder)
+    public function Pathfor($username, $path, $finalfolder, $data)
     {
-        $dir = './files/' . $_SESSION['username'] . '/' . $path;
+        $dir = './files/' . $_SESSION['username'] . $path . '/';
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
             if (is_dir($dir . $value)) {
                 $filesManager = new FilesManager();
-                $data = $filesManager->seeAllFolder($username, $path . '/' . $value, $finalfolder);
-                if ($value === $finalfolder) {
-                    return $dir . $value;
-                }
+                $data = $filesManager->Pathfor($username, $path . '/' . $value, $finalfolder, $data);
+                array_push($data, $dir . $value);
             }
         }
+        return $data;
     }
 
     public function addFile($path, $files, $title, $ext)
@@ -90,7 +91,7 @@ class FilesManager
     public function deleteFolder($path, $file)
     {
         $dir = './files/' . $_SESSION['username'] . '/' . $path . '/' . $file;
-        $objects = scandir($dir);
+        $objects = array_diff(scandir($dir), array(".", ".."));
         foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
                 if (filetype($dir . "/" . $object) == "dir") {
@@ -133,7 +134,15 @@ class FilesManager
             copy($dir . $name, $folderpath . '/' . $name);
             unlink($dir . $name);
         } else {
-            mkdir($dir . $name, $folderpath . '/' . $name);
+            mkdir($folderpath . '/' . $name);
+            $objects = array_diff(scandir($dir . $name), array(".", ".."));
+            if (!empty($objects)) {
+                foreach ($objects as $object) {
+                    var_dump($object);
+                    $filesManager = new FilesManager();
+                    //    $filesManager->moveInto($finalfolder, $path, $object, $folderpath . '/' . $name);
+                }
+            }
             rmdir($dir . $name);
         }
     }
