@@ -129,10 +129,12 @@ class MainController extends BaseController
         $data = [];
         if (empty($_POST['folders']) !== true) {
             $finalfolder = $_POST['folders'];
-            $path = $_POST['path'];
             $name = $_POST['name'];
+            $finalpath = $_POST['name'];
             $filesManager = new FilesManager();
-            $filesManager->moveInto($finalfolder, $path, $name);
+            $folderpath = $filesManager->Pathfor($_SESSION['username'], $path, $finalfolder);
+            $path = $_POST['path'];
+            $filesManager->moveInto($finalfolder, $path, $name, $folderpath);
             return $this->redirectToRoute('home');
         } else {
             $filesManager = new FilesManager();

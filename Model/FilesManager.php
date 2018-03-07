@@ -56,6 +56,20 @@ class FilesManager
         }
         return $data;
     }
+    public function Pathfor($username, $path, $finalfolder)
+    {
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
+        $files = array_diff(scandir($dir), array(".", ".."));
+        foreach ($files as $value) {
+            if (is_dir($dir . $value)) {
+                $filesManager = new FilesManager();
+                $data = $filesManager->seeAllFolder($username, $path . '/' . $value, $finalfolder);
+                if ($value === $finalfolder) {
+                    return $dir . $value;
+                }
+            }
+        }
+    }
 
     public function addFile($path, $files, $title, $ext)
     {
@@ -75,7 +89,7 @@ class FilesManager
 
     public function deleteFolder($path, $file)
     {
-        $dir = './files/' . $_SESSION['username'] . '/' . $path . $file;
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/' . $file;
         $objects = scandir($dir);
         foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
@@ -112,10 +126,15 @@ class FilesManager
             rename($dir . $olddata, $dir . $data . "." . $ext);
         }
     }
-    public function moveInto($finalfolder, $path, $name)
+    public function moveInto($finalfolder, $path, $name, $folderpath)
     {
         $dir = './files/' . $_SESSION['username'] . '/' . $path;
-        copy($dir . $name, $dir . $finalfolder . '/' . $name);
-        unlink($dir . $name);
+        if (pathinfo($name, PATHINFO_EXTENSION) !== "") {
+            copy($dir . $name, $folderpath . '/' . $name);
+            unlink($dir . $name);
+        } else {
+            mkdir($dir . $name, $folderpath . '/' . $name);
+            rmdir($dir . $name);
+        }
     }
 }

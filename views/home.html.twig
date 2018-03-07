@@ -12,7 +12,7 @@
   {% set foo =  0 %}
   {% for file in files %}
         <a download={{file}} href={{paths[foo]}}> {{file}}</a>
-        <a href='?action=home&deletefile={{file}}'>❌</a>
+        <a href='?action=home&deletefile={{file}}&path={{path}}'>❌</a>
         <a href='?action=rename&name={{file}}&path={{path}}'> 🖊</a>
         <a href='?action=move&path={{path}}&name={{file}}'> <img  width="22px" src="https://cdn4.iconfinder.com/data/icons/medical-icons-normal/1000/modules_orders.png"></a>  <br>
         <br>
