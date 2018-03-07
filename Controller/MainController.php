@@ -102,7 +102,7 @@ class MainController extends BaseController
             $path = $_GET['path'];
         }
         if (!empty($_SESSION['username']) === false) {
-            return $this->redirectToRoute('home', $data);
+            return $this->redirectToRoute('home');
         }
         if (!empty($_FILES)) {
             $filesManager = new FilesManager();
@@ -122,6 +122,32 @@ class MainController extends BaseController
             'path' => $path,
         ];
         return $this->render('addfile.html.twig', $data);
+    }
+    public function moveAction()
+    {
+        global $path;
+        $data = [];
+        if (empty($_POST['folders']) !== true) {
+            $finalfolder = $_POST['folders'];
+            $path = $_POST['path'];
+            $name = $_POST['name'];
+            $filesManager = new FilesManager();
+            $filesManager->moveInto($finalfolder, $path, $name);
+            return $this->redirectToRoute('home');
+        } else {
+            $filesManager = new FilesManager();
+            $folders = $filesManager->seeAllFolder($_SESSION['username'], $path, $data);
+            if (empty($_GET['path']) === false) {
+                $path = $_GET['path'];
+            }
+            $data = [
+                'username' => $_SESSION['username'],
+                'file' => $_GET['name'],
+                'path' => $path,
+                'folders' => $folders,
+            ];
+        }
+        return $this->render('move.html.twig', $data);
     }
     public function addfolderAction()
     {

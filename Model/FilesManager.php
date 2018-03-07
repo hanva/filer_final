@@ -43,6 +43,20 @@ class FilesManager
         }
         return $data;
     }
+    public function seeAllFolder($username, $path, $data)
+    {
+        $dir = './files/' . $_SESSION['username'] . $path . '/';
+        $files = array_diff(scandir($dir), array(".", ".."));
+        foreach ($files as $value) {
+            if (is_dir($dir . $value)) {
+                $filesManager = new FilesManager();
+                $data = $filesManager->seeAllFolder($username, $path . '/' . $value, $data);
+                array_push($data, $value);
+            }
+        }
+        return $data;
+    }
+
     public function addFile($path, $files, $title, $ext)
     {
         if ($title !== "") {
@@ -97,5 +111,11 @@ class FilesManager
         } else {
             rename($dir . $olddata, $dir . $data . "." . $ext);
         }
+    }
+    public function moveInto($finalfolder, $path, $name)
+    {
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
+        copy($dir . $name, $dir . $finalfolder . '/' . $name);
+        unlink($dir . $name);
     }
 }
