@@ -138,9 +138,8 @@ class FilesManager
             $objects = array_diff(scandir($dir . $name), array(".", ".."));
             if (!empty($objects)) {
                 foreach ($objects as $object) {
-                    var_dump($object);
                     $filesManager = new FilesManager();
-                    //    $filesManager->moveInto($finalfolder, $path, $object, $folderpath . '/' . $name);
+                    $filesManager->moveInto($finalfolder, $path . $name . '/', $object, $folderpath . '/' . $name);
                 }
             }
             rmdir($dir . $name);
