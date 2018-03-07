@@ -1,4 +1,7 @@
-small
-{
+small {
     color: purple;
+}
+
+img {
+    vertical-align: top;
 }
