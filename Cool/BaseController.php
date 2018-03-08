@@ -7,7 +7,6 @@ class BaseController
         global $twig;
         $template = $twig->load($view);
         $response = $template->render($data);
-
         return $response;
     }
 

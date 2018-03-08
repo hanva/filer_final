@@ -35,7 +35,6 @@ class FilesManager
                 array_push($data, "invalid");
             }
         }
-        var_dump($data);
         return $data;
     }
     public function seeFilesPaths($username, $path)
@@ -47,6 +46,32 @@ class FilesManager
             if (is_file($dir . $value) === true) {
                 array_push($data, $dir . $value);
             }
+        }
+        return $data;
+    }
+    public function changeText($content, $name, $path)
+    {
+        $newText = fopen($dir = './files/' . $_SESSION['username'] . '/' . $path . $name, 'w');
+        fwrite($newText, $content);
+        fclose($newText);
+    }
+    public function getType($name, $path)
+    {
+        $data = [];
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
+        array_push($data, $dir . $name);
+        $type = mime_content_type($dir . $name);
+        $type = substr($type, 0, strpos($type, "/"));
+        if ($type === "text") {
+            array_push($data, "text");
+            $text = (file_get_contents($dir . $name));
+            array_push($data, $text);
+        } elseif ($type === "video") {
+            array_push($data, "video");
+        } elseif ($type === "audio") {
+            array_push($data, "audio");
+        } else {
+            array_push($data, "image");
         }
         return $data;
     }

@@ -101,7 +101,6 @@ class MainController extends BaseController
     }
     public function addfileAction()
     {
-
         global $path;
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
@@ -127,6 +126,56 @@ class MainController extends BaseController
             'path' => $path,
         ];
         return $this->render('addfile.html.twig', $data);
+    }
+    public function seeAction()
+    {
+        global $path;
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+        }
+        if (!empty($_GET['name'])) {
+            $name = $_GET['name'];
+            $filesManager = new FilesManager();
+            $type = $filesManager->getType($name, $path);
+        }
+        $data = [
+            'username' => $_SESSION['username'],
+            'type' => $type,
+            'name' => $name,
+        ];
+        return $this->render('see.html.twig', $data);
+    }
+    public function writeAction()
+    {
+        global $path;
+        $filesManager = new FilesManager();
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+            $name = $_GET['name'];
+        }
+        if (empty($_POST['content']) === false) {
+            $content = $_POST['content'];
+            $name = $_POST['name'];
+            $path = $_POST['path'];
+            $filesManager->changeText($content, $name, $path);
+            if (strlen($path) > 1) {
+                return $this->redirectToRoute('home' . '&path=' . $path);
+            } else {
+                return $this->redirectToRoute('home');
+            }
+        } else {
+            if (!empty($_GET['name'])) {
+                $name = $_GET['name'];
+                $type = $filesManager->getType($name, $path);
+            }
+            $data = [
+                'username' => $_SESSION['username'],
+                'type' => $type,
+                'name' => $name,
+                'path' => $path,
+            ];
+            return $this->render('write.html.twig', $data);
+        }
     }
     public function moveAction()
     {
