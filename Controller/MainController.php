@@ -159,6 +159,10 @@ class MainController extends BaseController
                 'path' => $path,
                 'folders' => $folders,
             ];
+            if (empty($_GET['path']) === false) {
+                $home = "";
+                $data['home'] = $home;
+            }
         }
         return $this->render('move.html.twig', $data);
     }

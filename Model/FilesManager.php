@@ -142,7 +142,12 @@ class FilesManager
                     $filesManager->moveInto($finalfolder, $path . $name . '/', $object, $folderpath . '/' . $name);
                 }
             }
-            rmdir($dir . $name);
+            if ($dir !== './files/' . $_SESSION['username'] . '/') {
+                rmdir($dir . $name);
+            } else {
+                rmdir('./files/' . $_SESSION['username'] . '/' . $name);
+            }
+
         }
     }
 }
