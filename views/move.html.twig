@@ -3,15 +3,17 @@
 {% block page_title %}Cool Framework{% endblock %}
 {% block content %}
 move {{file}} into
-<form  action="?action=move" method="POST">
-<select name="folders">
- {% for folder in folders %}
-    <option> {{folder}}</option>
-  {% endfor %}
-   <option>home</option>
-  </select><br>
-  <button type="submit" class="btn btn-primary">Move</button>
-<input name="path" type="hidden" value='{{path}}'>
-<input name="name" type="hidden" value="{{file}}" required>
-</form>
+  <form  action="?action=move" method="POST">
+    <select name="folders">
+      {% for folder in folders %}
+          <option> {{folder}}</option>
+      {% endfor %}
+      {% if home is defined %}
+          <option>home</option>
+      {% endif %}
+    </select><br>
+    <button type="submit" class="btn btn-primary">Move</button>
+    <input name="path" type="hidden" value='{{path}}'>
+    <input name="name" type="hidden" value='{{file}}' required>
+  </form>
 {% endblock %}

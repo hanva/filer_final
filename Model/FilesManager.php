@@ -18,6 +18,25 @@ class FilesManager
         }
         return $data;
     }
+    public function isValidToSee($array, $path)
+    {
+        $data = [];
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/';
+        foreach ($array as $value) {
+            $type = mime_content_type($dir . $value);
+            $type = substr($type, 0, strpos($type, "/"));
+            if ($type === "video" or $type === "image" or $type === "text" or $type === "audio") {
+                if ($type === "text") {
+                    array_push($data, "text");
+                } else {
+                    array_push($data, "valid");
+                }
+            } else {
+                array_push($data, "invalid");
+            }
+        }
+        return $data;
+    }
     public function seeFilesPaths($username, $path)
     {
         $data = [];
@@ -27,6 +46,32 @@ class FilesManager
             if (is_file($dir . $value) === true) {
                 array_push($data, $dir . $value);
             }
+        }
+        return $data;
+    }
+    public function changeText($content, $name, $path)
+    {
+        $newText = fopen($dir = './files/' . $_SESSION['username'] . '/' . $path . $name, 'w');
+        fwrite($newText, $content);
+        fclose($newText);
+    }
+    public function getType($name, $path)
+    {
+        $data = [];
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
+        array_push($data, $dir . $name);
+        $type = mime_content_type($dir . $name);
+        $type = substr($type, 0, strpos($type, "/"));
+        if ($type === "text") {
+            array_push($data, "text");
+            $text = (file_get_contents($dir . $name));
+            array_push($data, $text);
+        } elseif ($type === "video") {
+            array_push($data, "video");
+        } elseif ($type === "audio") {
+            array_push($data, "audio");
+        } else {
+            array_push($data, "image");
         }
         return $data;
     }
@@ -142,7 +187,12 @@ class FilesManager
                     $filesManager->moveInto($finalfolder, $path . $name . '/', $object, $folderpath . '/' . $name);
                 }
             }
-            rmdir($dir . $name);
+            if ($dir !== './files/' . $_SESSION['username'] . '/') {
+                rmdir($dir . $name);
+            } else {
+                rmdir('./files/' . $_SESSION['username'] . '/' . $name);
+            }
+
         }
     }
 }

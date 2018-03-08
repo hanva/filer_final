@@ -3,6 +3,7 @@
 require_once 'Cool/BaseController.php';
 require_once 'Model/FormManager.php';
 require_once 'Model/FilesManager.php';
+require_once 'Model/SecurityManager.php';
 session_start();
 class MainController extends BaseController
 {
@@ -12,6 +13,8 @@ class MainController extends BaseController
         $data = [];
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
+            $log = new SecurityManager();
+            $log->write($_SESSION['username']);
         }
         $parentpath = rtrim($path, "/");
         if (empty($_SESSION['username']) === false) {
@@ -31,6 +34,7 @@ class MainController extends BaseController
             }
             $filesManager = new FilesManager();
             $fileresponse = $filesManager->seeFiles($_SESSION['username'], $path);
+            $valid = $filesManager->isValidToSee($fileresponse, $path);
             $pathResponse = $filesManager->seeFilesPaths($_SESSION['username'], $path);
             $folderResponse = $filesManager->seeFolder($_SESSION['username'], $path);
             if (strlen($path) > 1) {
@@ -44,6 +48,7 @@ class MainController extends BaseController
                 'paths' => $pathResponse,
                 'folders' => $folderResponse,
                 'path' => $path,
+                'valid' => $valid,
                 'parentpath', $parentpath,
             ];
             return $this->render('home.html.twig', $data);
@@ -96,7 +101,6 @@ class MainController extends BaseController
     }
     public function addfileAction()
     {
-
         global $path;
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
@@ -122,6 +126,56 @@ class MainController extends BaseController
             'path' => $path,
         ];
         return $this->render('addfile.html.twig', $data);
+    }
+    public function seeAction()
+    {
+        global $path;
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+        }
+        if (!empty($_GET['name'])) {
+            $name = $_GET['name'];
+            $filesManager = new FilesManager();
+            $type = $filesManager->getType($name, $path);
+        }
+        $data = [
+            'username' => $_SESSION['username'],
+            'type' => $type,
+            'name' => $name,
+        ];
+        return $this->render('see.html.twig', $data);
+    }
+    public function writeAction()
+    {
+        global $path;
+        $filesManager = new FilesManager();
+        if (empty($_GET['path']) === false) {
+            $path = $_GET['path'];
+            $name = $_GET['name'];
+        }
+        if (empty($_POST['content']) === false) {
+            $content = $_POST['content'];
+            $name = $_POST['name'];
+            $path = $_POST['path'];
+            $filesManager->changeText($content, $name, $path);
+            if (strlen($path) > 1) {
+                return $this->redirectToRoute('home' . '&path=' . $path);
+            } else {
+                return $this->redirectToRoute('home');
+            }
+        } else {
+            if (!empty($_GET['name'])) {
+                $name = $_GET['name'];
+                $type = $filesManager->getType($name, $path);
+            }
+            $data = [
+                'username' => $_SESSION['username'],
+                'type' => $type,
+                'name' => $name,
+                'path' => $path,
+            ];
+            return $this->render('write.html.twig', $data);
+        }
     }
     public function moveAction()
     {
@@ -159,6 +213,10 @@ class MainController extends BaseController
                 'path' => $path,
                 'folders' => $folders,
             ];
+            if (empty($_GET['path']) === false) {
+                $home = "";
+                $data['home'] = $home;
+            }
         }
         return $this->render('move.html.twig', $data);
     }
