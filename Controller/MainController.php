@@ -3,6 +3,7 @@
 require_once 'Cool/BaseController.php';
 require_once 'Model/FormManager.php';
 require_once 'Model/FilesManager.php';
+require_once 'Model/SecurityManager.php';
 session_start();
 class MainController extends BaseController
 {
@@ -12,6 +13,8 @@ class MainController extends BaseController
         $data = [];
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
+            $log = new SecurityManager();
+            $log->write($_SESSION['username']);
         }
         $parentpath = rtrim($path, "/");
         if (empty($_SESSION['username']) === false) {
@@ -31,6 +34,7 @@ class MainController extends BaseController
             }
             $filesManager = new FilesManager();
             $fileresponse = $filesManager->seeFiles($_SESSION['username'], $path);
+            $valid = $filesManager->isValidToSee($fileresponse, $path);
             $pathResponse = $filesManager->seeFilesPaths($_SESSION['username'], $path);
             $folderResponse = $filesManager->seeFolder($_SESSION['username'], $path);
             if (strlen($path) > 1) {
@@ -44,6 +48,7 @@ class MainController extends BaseController
                 'paths' => $pathResponse,
                 'folders' => $folderResponse,
                 'path' => $path,
+                'valid' => $valid,
                 'parentpath', $parentpath,
             ];
             return $this->render('home.html.twig', $data);

@@ -18,6 +18,26 @@ class FilesManager
         }
         return $data;
     }
+    public function isValidToSee($array, $path)
+    {
+        $data = [];
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/';
+        foreach ($array as $value) {
+            $type = mime_content_type($dir . $value);
+            $type = substr($type, 0, strpos($type, "/"));
+            if ($type === "video" or $type === "image" or $type === "text" or $type === "audio") {
+                if ($type === "text") {
+                    array_push($data, "text");
+                } else {
+                    array_push($data, "valid");
+                }
+            } else {
+                array_push($data, "invalid");
+            }
+        }
+        var_dump($data);
+        return $data;
+    }
     public function seeFilesPaths($username, $path)
     {
         $data = [];
