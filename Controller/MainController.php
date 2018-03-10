@@ -13,8 +13,6 @@ class MainController extends BaseController
         $data = [];
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
-            $log = new SecurityManager();
-            $log->write($_SESSION['username']);
         }
         $parentpath = rtrim($path, "/");
         if (empty($_SESSION['username']) === false) {

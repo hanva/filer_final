@@ -179,12 +179,16 @@ class FilesManager
             copy($dir . $name, $folderpath . '/' . $name);
             unlink($dir . $name);
         } else {
-            mkdir($folderpath . '/' . $name);
-            $objects = array_diff(scandir($dir . $name), array(".", ".."));
-            if (!empty($objects)) {
-                foreach ($objects as $object) {
-                    $filesManager = new FilesManager();
-                    $filesManager->moveInto($finalfolder, $path . $name . '/', $object, $folderpath . '/' . $name);
+            if (file_exists($folderpath . '/' . $name)) {
+                var_dump($dir . $name);
+            } else {
+                mkdir($folderpath . '/' . $name);
+                $objects = array_diff(scandir($dir . $name), array(".", ".."));
+                if (!empty($objects)) {
+                    foreach ($objects as $object) {
+                        $filesManager = new FilesManager();
+                        $filesManager->moveInto($finalfolder, $path . $name . '/', $object, $folderpath . '/' . $name);
+                    }
                 }
             }
             if ($dir !== './files/' . $_SESSION['username'] . '/') {
