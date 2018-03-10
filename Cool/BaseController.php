@@ -7,18 +7,17 @@ class BaseController
         global $twig;
         $template = $twig->load($view);
         $response = $template->render($data);
-
         return $response;
     }
-    
+
     protected function redirect($url)
     {
-        header('Location: '.$url);
+        header('Location: ' . $url);
         exit();
     }
-    
+
     protected function redirectToRoute($route)
     {
-        $this->redirect('?action='.$route);
+        $this->redirect('?action=' . $route);
     }
 }
