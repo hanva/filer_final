@@ -2,14 +2,10 @@
 
 {% block page_title %}Cool Framework{% endblock %}
 {% block content %}
-<h1>Register<br>
-    {% for error in errors %}
-    <article>
-        {{error}}
-    </article>
-{% endfor %}
- {{already}}
-    <form action="?action=register" method="POST" name="form">
+
+    <div class="formRegisterStyle">
+        <h1>Sign In<br></h1>
+    <form action="?action=register" method="POST" name="groupeform">
         <div class="form-group">
             <label for="firstname">First name</label>
             <input type="text" name="firstname" id="firstname" class="form-control">
@@ -34,8 +30,10 @@
             <label for="password_repeat">Repeat password</label>
             <input type="password" name="password_repeat" id="password_repeat" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary">Sign In</button>
     </form>
-</h1>
+   </div>
+
 {% endblock %}
+
 

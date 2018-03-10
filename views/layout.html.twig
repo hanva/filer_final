@@ -6,19 +6,45 @@
     <link rel="stylesheet" href="assets/style.css">
   </head>
   <body>
-  <header>
-    <nav>
-    {% if username is defined %}
-      <a href="?action=home">home</a>
-      <a href="?action=addfile">addfile</a>
-      <a href="?action=addfolder">addfolder</a>
-      <a href="?action=disconnect">disconnect</a><br>
-      {% else %}
-      <a href="?action=login">login</a>
-      <a href="?action=register">register</a>
-      {% endif %}
-    </nav>
-  </header>
-    {% block content %}{% endblock %}
+      <header>
+        <nav>
+          <input type="hidden" value={{path}}>
+          {% if username is defined %}
+          <div class="navStyle">
+            <a href="?action=home">
+            <img  alt="Home" src="https://png.icons8.com/metro/1600/home.png" width="25" height="25">
+            Home
+            </a>
+            <a href='?action=addfile&path={{path}}'>
+            <img  alt="File" src="https://cdn3.iconfinder.com/data/icons/files/100/237034-file_document_add_plus-512.png" width="25" height="25">
+            Add a file
+            </a>
+            <a href='?action=addfolder&path={{path}}'>
+            <img alt="Folder" src="https://cdn3.iconfinder.com/data/icons/files/100/237046-folder_add_plus-512.png"width="25" height="25">
+            Add a folder</a>
+          
+            
+            <a class="navStyle alignSelf" href="?action=disconnect"> 
+          <img alt="Sing Out" src="https://cdn0.iconfinder.com/data/icons/glyph-2-ui-part-1-of-4/100/pack02-05-512.png" width="25" height="25">
+          Logout</a><br>
+
+          {% else %}
+            <a href="?action=login">Login</a>
+            <a href="?action=register">Sign In</a>
+              </div>
+          {% endif %}
+        </nav>
+      </header>
+    <div class="errors">
+      {% for error in errors %}
+          <article>
+          {{error}}
+          </article>
+        {% endfor %}
+        {{already}}
+        {{errors}}
+        </div>
+      {% block content %}{% endblock %}
+    <script src="./assets/script/script.js"></script>
   </body>
 </html>

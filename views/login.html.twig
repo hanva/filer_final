@@ -3,8 +3,10 @@
 {% block page_title %}Login{% endblock %}
 
 {% block content %}
-<h1>login<h1>
+
     {{errors}}
+    <div class="formRegisterStyle">
+    <h1>Login</h1>
     <form action="?action=login" method="POST" name="form">
         <div class="form-group">
             <label for="username">Username</label>
@@ -16,5 +18,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
-
+</div>
 {% endblock %}
+
+

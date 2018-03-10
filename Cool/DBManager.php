@@ -12,7 +12,6 @@ class DBManager
         if ($config['db']['port']) {
             $address .= ':' . $config['db']['port'];
         }
-
         $dsn = 'mysql:dbname=' . $config['db']['name'] . ';host=' . $address;
         $user = $config['db']['user'];
         $password = $config['db']['password'];

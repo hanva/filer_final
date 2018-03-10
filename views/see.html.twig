@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}Filer{% endblock %}
+{% block content %}
+<br>
+    {% if type[1] == "text" %}
+        {{type[2]}}
+    {% endif %}
+    {% if type[1]== "audio" %}
+        <audio src=''{{type[0]}}' autoplay'>
+    {% endif %}
+    {% if type[1] == "image" %}
+        <img  width="50%" src='{{type[0]}}'>
+    {% endif %}
+    {% if type[1] == "video" %}
+        <video controls  width="70%" src='{{type[0]}}' autoplay>
+    {% endif %}
+{% endblock %}
