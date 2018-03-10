@@ -3,12 +3,6 @@ body{
     background-color: #FFFFFF; 
 }
 
-img {
-    vertical-align: top;
-}
-.col{
-    background-color: black; 
-}
 
 input[type=text] {
     width: 100%;
