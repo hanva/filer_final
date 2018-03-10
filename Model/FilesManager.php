@@ -115,6 +115,10 @@ class FilesManager
         }
         return $data;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
     public function addFile($path, $files, $title, $ext)
     {
         if ($title !== "") {
@@ -130,6 +134,7 @@ class FilesManager
         $dir = './files/' . $_SESSION['username'] . '/' . $path;
         unlink($dir . $file);
     }
+
     public function deleteFolder($path, $file)
     {
         $dir = './files/' . $_SESSION['username'] . '/' . $path . '/' . $file;
@@ -193,6 +198,10 @@ class FilesManager
             } else {
                 rmdir('./files/' . $_SESSION['username'] . '/' . $name);
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
         }
     }
 }

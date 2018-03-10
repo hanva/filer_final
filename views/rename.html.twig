@@ -1,5 +1,6 @@
 {% extends 'layout.html.twig' %}
 
+<<<<<<< HEAD
 {% block page_title %}Filer{% endblock %}
 
 
@@ -14,4 +15,17 @@
     </form>
     </div>
 
+=======
+{% block page_title %}Cool Framework{% endblock %}
+
+
+{% block content %}
+rename {{file}}<br>
+    <form  action="?action=rename" method="POST" >
+        <input name="newname" type="text"  placeholder="new title"  required >
+        <button type="submit" class="btn btn-primary">move file</button>
+        <input name="path" type="hidden" value='{{path}}'>
+        <input name="oldname" type="hidden" value="{{file}}" required >
+    </form>
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
 {% endblock %}

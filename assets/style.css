@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #FFFFFF; 
@@ -102,4 +103,12 @@ img:hover {
     
     position: absolute;
     right: 10px; 
+=======
+small {
+    color: purple;
+}
+
+img {
+    vertical-align: top;
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
 }

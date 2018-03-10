@@ -2,9 +2,14 @@
 
 {% block page_title %}Cool Framework{% endblock %}
 {% block content %}
+<<<<<<< HEAD
  <div class="formRegisterStyle">
   <form  action="?action=move" method="POST">
   Move  your file : {{file}} <br> into
+=======
+move {{file}} into
+  <form  action="?action=move" method="POST">
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
     <select name="folders">
       {% for folder in folders %}
           <option> {{folder}}</option>
@@ -17,5 +22,8 @@
     <input name="path" type="hidden" value='{{path}}'>
     <input name="name" type="hidden" value='{{file}}' required>
   </form>
+<<<<<<< HEAD
    </div>
+=======
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
 {% endblock %}

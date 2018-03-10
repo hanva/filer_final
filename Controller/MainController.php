@@ -266,6 +266,10 @@ class MainController extends BaseController
         } else {
             return $this->redirectToRoute('home');
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
     }
     public function loginAction()
     {
