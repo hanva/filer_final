@@ -6,29 +6,30 @@
     <link rel="stylesheet" href="assets/style.css">
   </head>
   <body>
-  <header>
-    <nav>
-    <input type="hidden" value={{path}}>
-    {% if username is defined %}
-      <a href="?action=home">home</a>
-      <a href='?action=addfile&path={{path}}'>addfile</a>
-      <a href='?action=addfolder&path={{path}}'>addfolder</a>
-      <a href="?action=disconnect">disconnect</a><br>
-      {% else %}
-      <a href="?action=login">login</a>
-      <a href="?action=register">register</a>
-      {% endif %}
-    </nav>
-  </header>
-  <div class="errors"
+      <header>
+        <nav>
+          <input type="hidden" value={{path}}>
+          {% if username is defined %}
+            <a href="?action=home">home</a>
+            <a href='?action=addfile&path={{path}}'>addfile</a>
+            <a href='?action=addfolder&path={{path}}'>addfolder</a>
+            <a href="?action=disconnect">disconnect</a><br>
+          {% else %}
+            <a href="?action=login">login</a>
+            <a href="?action=register">register</a>
+          {% endif %}
+        </nav>
+      </header>
+    <div class="errors">
       {% for error in errors %}
-    <article>
-        {{error}}
-    </article>
-{% endfor %}
-  {{already}}
-  {{errors}}
-  </div>
-    {% block content %}{% endblock %}
+          <article>
+          {{error}}
+          </article>
+        {% endfor %}
+        {{already}}
+        {{errors}}
+        </div>
+      {% block content %}{% endblock %}
+    <script src="./assets/script/script.js"></script>
   </body>
 </html>
