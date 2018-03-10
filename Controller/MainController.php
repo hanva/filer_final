@@ -19,7 +19,7 @@ class MainController extends BaseController
                 return $this->redirectToRoute('home');
             }
         }
-        $parentpath = rtrim($path, "/");
+        $parentpath = $filesManager->getParentPath($path);
         if (empty($_SESSION['username']) === false) {
             if (empty($_GET['deletefile']) === false) {
                 $data = $_GET['deletefile'];
@@ -50,7 +50,7 @@ class MainController extends BaseController
                 'folders' => $folderResponse,
                 'path' => $path,
                 'valid' => $valid,
-                'parentpath', $parentpath,
+                'parentpath' => $parentpath,
             ];
             return $this->render('home.html.twig', $data);
         } else {
