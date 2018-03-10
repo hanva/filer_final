@@ -12,8 +12,11 @@ class SecurityManager
     }
     public function securePath($path, $username)
     {
+        if ($path === "") {
+            return true;
+        }
         $a = '../';
-        if (strpos($path, '../') !== true) {
+        if (strpos($path, $a) !== false) {
             $securityManager = new SecurityManager();
             $securityManager->write($username);
             return false;

@@ -131,6 +131,9 @@ class MainController extends BaseController
             $title = $_POST['usertitle'];
             $ext = pathinfo($files, PATHINFO_EXTENSION);
             $path = $_POST['path'];
+            if ($SecurityManager->securePath($title, $_SESSION['username']) === false or $SecurityManager->securePath($path, $_SESSION['username']) === false) {
+                return $this->redirectToRoute('home');
+            }
             $filesManager->addFile($path, $files, $title, $ext);
             if (strlen($path) > 1) {
                 return $this->redirectToRoute('home' . '&path=' . $path);
@@ -182,7 +185,7 @@ class MainController extends BaseController
             $content = $_POST['content'];
             $name = $_POST['name'];
             $path = $_POST['path'];
-            if ($SecurityManager->securePath($path, $_SESSION['username']) === false or $SecurityManager->securePath($name, $_SESSION['username'])) {
+            if ($SecurityManager->securePath($title, $_SESSION['username']) === false or $SecurityManager->securePath($name, $_SESSION['username']) === false) {
                 return $this->redirectToRoute('home');
             }
             $filesManager->changeText($content, $name, $path);
