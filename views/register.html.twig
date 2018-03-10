@@ -3,12 +3,6 @@
 {% block page_title %}Cool Framework{% endblock %}
 {% block content %}
 <h1>Register<br>
-    {% for error in errors %}
-    <article>
-        {{error}}
-    </article>
-{% endfor %}
- {{already}}
     <form action="?action=register" method="POST" name="form">
         <div class="form-group">
             <label for="firstname">First name</label>
