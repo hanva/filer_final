@@ -11,6 +11,7 @@ move {{file}} into
       {% if home is defined %}
           <option>home</option>
       {% endif %}
+      {{errors}}
     </select><br>
     <button type="submit" class="btn btn-primary">Move</button>
     <input name="path" type="hidden" value='{{path}}'>

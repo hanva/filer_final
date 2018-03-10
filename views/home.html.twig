@@ -30,5 +30,7 @@
       <a href='?action=rename&path={{path}}&name={{folder}}'> 🖊</a>
       <a href='?action=move&path={{path}}&name={{folder}}'> <img  width="22px" src="./assets/img/move.png"></a>  <br> <br>
   {% endfor %}
+ {%if username is defined%}
     <a href='?action=home&path={{parentpath}}'>Back to the 90's</a>
+    {% endif %}
 {% endblock %}

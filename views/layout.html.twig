@@ -20,6 +20,15 @@
       {% endif %}
     </nav>
   </header>
+  <div class="errors"
+      {% for error in errors %}
+    <article>
+        {{error}}
+    </article>
+{% endfor %}
+  {{already}}
+  {{errors}}
+  </div>
     {% block content %}{% endblock %}
   </body>
 </html>
