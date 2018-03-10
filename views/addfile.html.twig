@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="col">
-<form enctype="multipart/form-data" action="?action=addfile" method="POST" >   <br /><br />
+<form enctype="multipart/form-data" action="?action=addfile" method="POST" name="fileform" >   <br /><br />
     <input type="text"  id="usertitle" name="usertitle" placeholder="title if needed">     <br /><br />
         <input type="file" id="userfile" name="userfile" /><br /><br />
         <input type="hidden" id="userfile" name="path" value='{{path}}' /><br /><br />

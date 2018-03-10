@@ -9,16 +9,20 @@ class MainController extends BaseController
 {
     public function homeAction()
     {
+        $filesManager = new FilesManager();
+        $SecurityManager = new SecurityManager();
         global $path;
         $data = [];
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
+            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+                return $this->redirectToRoute('home');
+            }
         }
         $parentpath = rtrim($path, "/");
         if (empty($_SESSION['username']) === false) {
             if (empty($_GET['deletefile']) === false) {
                 $data = $_GET['deletefile'];
-                $filesManager = new FilesManager();
                 if (pathinfo($data, PATHINFO_EXTENSION) === "") {
                     $filesManager->deleteFolder($path, $data);
                 } else {
@@ -30,7 +34,6 @@ class MainController extends BaseController
                     return $this->redirectToRoute('home');
                 }
             }
-            $filesManager = new FilesManager();
             $fileresponse = $filesManager->seeFiles($_SESSION['username'], $path);
             $valid = $filesManager->isValidToSee($fileresponse, $path);
             $pathResponse = $filesManager->seeFilesPaths($_SESSION['username'], $path);
@@ -64,18 +67,30 @@ class MainController extends BaseController
     }
     public function renameAction()
     {
+        $SecurityManager = new SecurityManager();
         global $path;
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
+            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+                return $this->redirectToRoute('home');
+            }
         }
         if (isset($_POST['newname'])) {
             if (!empty($_POST['newname'] === true)) {
+                write($username);
+                return $this->redirectToRoute('home');
             } else {
                 $ext = pathinfo($_POST['oldname'], PATHINFO_EXTENSION);
                 $olddata = $_POST['oldname'];
                 $data = $_POST['newname'];
+                if ($SecurityManager->securePath($data, $_SESSION['username']) === false) {
+                    return $this->redirectToRoute('home');
+                }
                 if (empty($_POST['path']) === false) {
                     $path = $_POST['path'];
+                    if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+                        return $this->redirectToRoute('home');
+                    }
                 }
                 $filesManager = new FilesManager();
                 $filesManager->rename($data, $ext, $olddata, $path);
@@ -100,8 +115,12 @@ class MainController extends BaseController
     public function addfileAction()
     {
         global $path;
+        $SecurityManager = new SecurityManager();
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
+            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+                return $this->redirectToRoute('home');
+            }
         }
         if (!empty($_SESSION['username']) === false) {
             return $this->redirectToRoute('home');
@@ -128,8 +147,12 @@ class MainController extends BaseController
     public function seeAction()
     {
         global $path;
+        $SecurityManager = new SecurityManager();
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
+            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+                return $this->redirectToRoute('home');
+            }
         }
         if (!empty($_GET['name'])) {
             $name = $_GET['name'];
@@ -147,14 +170,21 @@ class MainController extends BaseController
     {
         global $path;
         $filesManager = new FilesManager();
+        $SecurityManager = new SecurityManager();
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
             $name = $_GET['name'];
+            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+                return $this->redirectToRoute('home');
+            }
         }
         if (empty($_POST['content']) === false) {
             $content = $_POST['content'];
             $name = $_POST['name'];
             $path = $_POST['path'];
+            if ($SecurityManager->securePath($path, $_SESSION['username']) === false or $SecurityManager->securePath($name, $_SESSION['username'])) {
+                return $this->redirectToRoute('home');
+            }
             $filesManager->changeText($content, $name, $path);
             if (strlen($path) > 1) {
                 return $this->redirectToRoute('home' . '&path=' . $path);
@@ -179,6 +209,7 @@ class MainController extends BaseController
     {
         global $path;
         $filesManager = new FilesManager();
+        $SecurityManager = new SecurityManager();
         $data = [];
         if (empty($_POST['folders']) === false) {
             $name = $_POST['name'];

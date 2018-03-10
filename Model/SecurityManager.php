@@ -6,10 +6,18 @@ class SecurityManager
     {
         $log = fopen('log.txt', 'a,b');
         $date = date('l jS \of F Y h:i:s A');
-        $content = file_get_contents('log.txt');
         $newline = $date . ' attack by : ' . $username . "\n";
-        $content = $content . $newline . "\n";
-        fwrite($log, $content);
+        fwrite($log, $newline);
         fclose($log);
+    }
+    public function securePath($path, $username)
+    {
+        $a = '../';
+        if (strpos($path, '../') !== true) {
+            $securityManager = new SecurityManager();
+            $securityManager->write($username);
+            return false;
+        }
+        return true;
     }
 }
