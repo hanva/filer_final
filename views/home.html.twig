@@ -12,9 +12,10 @@
         <a download={{file}} href={{paths[foo]}}> <img  alt="File" src="https://png.icons8.com/metro/1600/file.png" width="20" height="20"> {{file}} 
 </a>
         <a href='?action=home&deletefile={{file}}&path={{path}}'>
-        <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
+          <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
         <a href='?action=rename&name={{file}}&path={{path}}'>
-        <img alt="Modify" src="./assets/img/modify.png" width="20"></a>
+          <img alt="Rename" src="./assets/img/modify.png" width="20"></a>
+          
         <a href='?action=move&path={{path}}&name={{file}}'> <img  width="22px" src="./assets/img/moveOne.png"></a>
         {% if valid[foo] == "valid" or valid[foo]== "text" %}
         <a href='?action=see&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/viewFile.png"></a>  
@@ -25,19 +26,20 @@
         <br><br>
         {% set foo = foo + 1 %}
   {% endfor %}
+  
     {% for folder in folders %}
-    <div class="organizeFolder"> 
-      <a href='?action=home&path={{path}}{{folder}}'><img alt="Delete" src="http://iconshow.me/media/images/ui/ios7-icons/png/512/folder-outline.png" width="25"></a>
+    
+      <a href='?action=home&path={{path}}{{folder}}'> <img alt="Folder" src="http://iconshow.me/media/images/ui/ios7-icons/png/512/folder-outline.png" width="25"></a>
 {{folder}}</a>
       <a href='?action=home&path={{path}}&deletefile={{folder}}'> <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
       <a href='?action=rename&path={{path}}&name={{folder}}'> <img alt="Modify" src="./assets/img/modify.png" width="20"></a>
       <a href='?action=move&path={{path}}&name={{folder}}'> <img  width="22px" src="./assets/img/moveOne.png">
-        <br> <br>
-        </div> 
+        <br><br>
+
   {% endfor %}
- {%if username is defined%}
+  {%if username is defined%}
     <a href='?action=home&path={{parentpath}}'>Back to the 90's</a>
-    {% endif %}
+  {% endif %}
 
   <footer>
     <small>By Nicolas Tran & Karla Og</small>

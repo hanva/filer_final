@@ -15,6 +15,10 @@ class SecurityManager
         if ($path === "") {
             return true;
         }
+        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/';
+        if (file_exists($dir) === false) {
+            return false;
+        }
         $a = '../';
         if (strpos($path, $a) !== false) {
             $securityManager = new SecurityManager();

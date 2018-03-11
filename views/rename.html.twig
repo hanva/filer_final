@@ -5,13 +5,12 @@
 
 {% block content %}
     <div class="formRegisterStyle">
-    Rename your file : {{file}}<br>
-    <form  action="?action=rename" method="POST">
-        <input name="newname" type="text"  placeholder="New title" required >
-        <button type="submit" class="btn btn-primary">Rename File</button>
-        <input name="path" type="hidden" value='{{path}}'>
-        <input name="oldname" type="hidden" value="{{file}}" required >
-    </form>
+        Rename your file : {{file}}<br>
+        <form  action="?action=rename" method="POST">
+            <input name="newname" type="text"  placeholder="New title" required >
+            <button type="submit" class="btn btn-primary">Rename File</button>
+            <input name="path" type="hidden" value='{{path}}'>
+            <input name="oldname" type="hidden" value="{{file}}" required >
+        </form>
     </div>
-
 {% endblock %}

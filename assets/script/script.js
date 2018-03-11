@@ -34,7 +34,7 @@ window.onload = function () {
             if (1 > lastname.length) {
                 errorMessage += 'Saisir 1 caractère minimum pour le nom <br>';
             }
-            if (4 > username.length) {
+            if (4 > nickname.length) {
                 errorMessage += 'Saisir 4 caractères minimum pour le pseudo <br>';
             }
 

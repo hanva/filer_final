@@ -115,6 +115,17 @@ class FilesManager
         }
         return $data;
     }
+    public function getParentPath($path)
+    {
+        $parentpath = "";
+        $pieces = explode("/", $path);
+        array_pop($pieces);
+        foreach ($pieces as $piece) {
+            $parentpath = $parentpath . '/' . $piece;
+        }
+        $parentpath = substr($parentpath, 1);
+        return $parentpath;
+    }
     public function addFile($path, $files, $title, $ext)
     {
         if ($title !== "") {
@@ -130,6 +141,7 @@ class FilesManager
         $dir = './files/' . $_SESSION['username'] . '/' . $path;
         unlink($dir . $file);
     }
+
     public function deleteFolder($path, $file)
     {
         $dir = './files/' . $_SESSION['username'] . '/' . $path . '/' . $file;
