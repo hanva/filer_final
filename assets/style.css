@@ -118,3 +118,8 @@ img:hover {
     position: absolute;
     right: 10px; 
 }
+a{
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+}
