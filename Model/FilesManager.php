@@ -40,7 +40,7 @@ class FilesManager
     public function seeFilesPaths($username, $path)
     {
         $data = [];
-        $dir = './files/' . $_SESSION['username'] . '/' . $path . '/';
+        $dir = './files/' . $_SESSION['username'] . '/' . $path;
         $files = array_diff(scandir($dir), array(".", ".."));
         foreach ($files as $value) {
             if (is_file($dir . $value) === true) {
@@ -188,23 +188,19 @@ class FilesManager
             copy($dir . $name, $folderpath . '/' . $name);
             unlink($dir . $name);
         } else {
-            if (file_exists($folderpath . '/ ' . $name) === true) {
-                return false;
-            } else {
-                mkdir($folderpath . '/' . $name);
-                $objects = array_diff(scandir($dir . $name), array(".", ".."));
-                if (!empty($objects)) {
-                    foreach ($objects as $object) {
-                        $filesManager = new FilesManager();
-                        $filesManager->moveInto($finalfolder, $path . $name . '/', $object, $folderpath . '/' . $name);
-                    }
+            mkdir($folderpath . '/' . $name);
+            $objects = array_diff(scandir($dir . $name), array(".", ".."));
+            if (!empty($objects)) {
+                foreach ($objects as $object) {
+                    $filesManager = new FilesManager();
+                    $filesManager->moveInto($finalfolder, $path . $name . '/', $object, $folderpath . '/' . $name);
                 }
             }
-            if ($dir !== './files/' . $_SESSION['username'] . '/') {
-                rmdir($dir . $name);
-            } else {
-                rmdir('./files/' . $_SESSION['username'] . '/' . $name);
-            }
+        }
+        if ($dir !== './files/' . $_SESSION['username'] . '/') {
+            rmdir($dir . $name);
+        } else {
+            rmdir('./files/' . $_SESSION['username'] . '/' . $name);
         }
     }
 }
