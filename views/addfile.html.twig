@@ -3,12 +3,12 @@
 {% block page_title %}Filer{% endblock %}
 
 {% block content %}
-<div class="formRegisterStyle">
-<form class="formraddfile" enctype="multipart/form-data" action="?action=addfile" method="POST" name="fileform"> 
-    <input type="text"  id="usertitle" name="usertitle" placeholder="Title if needed"> 
-        <input type="file" class="userfilebutton" id="userfile" name="userfile" />
-        <input type="hidden" id="userfile" name="path" value='{{path}}'/>
-        <button type="submit" class="btn btn-primary">Add a file</button>
-    </form>
-</div>
+    <div class="formRegisterStyle">
+        <form class="formraddfile" enctype="multipart/form-data" action="?action=addfile" method="POST" name="fileform"> 
+            <input type="text"  id="usertitle" name="usertitle" placeholder="Title if needed"> 
+            <input type="file" class="userfilebutton" id="userfile" name="userfile" />
+            <input type="hidden" id="userfile" name="path" value='{{path}}'/>
+            <button type="submit" class="btn btn-primary">Add a file</button>
+        </form>
+    </div>
 {% endblock %}
