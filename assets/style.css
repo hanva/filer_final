@@ -121,3 +121,7 @@ img:hover {
     position: absolute;
     right: 10px;
 }
+
+img {
+    vertical-align: middle;
+}

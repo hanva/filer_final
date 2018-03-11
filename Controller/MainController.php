@@ -14,7 +14,7 @@ class MainController extends BaseController
         $data = [];
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
-            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+            if ($SecurityManager->securePath($path, $_SESSION['username'], 1) === false) {
                 return $this->redirectToRoute('home');
             }
         }
@@ -70,7 +70,7 @@ class MainController extends BaseController
         global $path;
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
-            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+            if ($SecurityManager->securePath($path, $_SESSION['username'], 1) === false) {
                 return $this->redirectToRoute('home');
             }
         }
@@ -82,12 +82,12 @@ class MainController extends BaseController
                 $ext = pathinfo($_POST['oldname'], PATHINFO_EXTENSION);
                 $olddata = $_POST['oldname'];
                 $data = $_POST['newname'];
-                if ($SecurityManager->securePath($data, $_SESSION['username']) === false) {
+                if ($SecurityManager->securePath($data, $_SESSION['username'], 0) === false) {
                     return $this->redirectToRoute('home');
                 }
                 if (empty($_POST['path']) === false) {
                     $path = $_POST['path'];
-                    if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+                    if ($SecurityManager->securePath($path, $_SESSION['username'], 1) === false) {
                         return $this->redirectToRoute('home');
                     }
                 }
@@ -118,7 +118,7 @@ class MainController extends BaseController
         $filesManager = new FilesManager();
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
-            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+            if ($SecurityManager->securePath($path, $_SESSION['username'], 1) === false) {
                 return $this->redirectToRoute('home');
             }
         }
@@ -131,7 +131,7 @@ class MainController extends BaseController
             $title = $_POST['usertitle'];
             $ext = pathinfo($files, PATHINFO_EXTENSION);
             $path = $_POST['path'];
-            if ($SecurityManager->securePath($title, $_SESSION['username']) === false or $SecurityManager->securePath($path, $_SESSION['username']) === false) {
+            if ($SecurityManager->securePath($title, $_SESSION['username'], 0) === false or $SecurityManager->securePath($path, $_SESSION['username'], 1) === false) {
                 return $this->redirectToRoute('home');
             }
             $filesManager->addFile($path, $files, $title, $ext);
@@ -155,7 +155,7 @@ class MainController extends BaseController
         $filesManager = new FilesManager();
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
-            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+            if ($SecurityManager->securePath($path, $_SESSION['username'], 1) === false) {
                 return $this->redirectToRoute('home');
             }
         }
@@ -180,7 +180,7 @@ class MainController extends BaseController
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
             $name = $_GET['name'];
-            if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
+            if ($SecurityManager->securePath($path, $_SESSION['username'], 1) === false) {
                 return $this->redirectToRoute('home');
             }
         }
@@ -189,7 +189,7 @@ class MainController extends BaseController
             $content = $_POST['content'];
             $name = $_POST['name'];
             $path = $_POST['path'];
-            if ($SecurityManager->securePath($title, $_SESSION['username']) === false or $SecurityManager->securePath($name, $_SESSION['username']) === false) {
+            if ($SecurityManager->securePath($title, $_SESSION['username'], 0) === false or $SecurityManager->securePath($name, $_SESSION['username'], 0) === false) {
                 return $this->redirectToRoute('home');
             }
             $filesManager->changeText($content, $name, $path);

@@ -10,14 +10,17 @@ class SecurityManager
         fwrite($log, $newline);
         fclose($log);
     }
-    public function securePath($path, $username)
+    public function securePath($path, $username, $fold)
     {
         if ($path === "") {
             return true;
         }
         $dir = './files/' . $_SESSION['username'] . '/' . $path . '/';
-        if (file_exists($dir) === false) {
-            return false;
+
+        if ($fold === 1) {
+            if (file_exists($dir) === false) {
+                return false;
+            }
         }
         $a = '../';
         if (strpos($path, $a) !== false) {
