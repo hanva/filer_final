@@ -44,7 +44,11 @@
         {{already}}
         {{errors}}
         </div>
+
       {% block content %}{% endblock %}
+       {%if username is defined%}
+    <a href='?action=home&path={{parentpath}}'>Back to the 90's</a>
+  {% endif %}
     <script src="./assets/script/script.js"></script>
   </body>
 </html>

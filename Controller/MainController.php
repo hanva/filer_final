@@ -115,17 +115,18 @@ class MainController extends BaseController
     {
         global $path;
         $SecurityManager = new SecurityManager();
+        $filesManager = new FilesManager();
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
             if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
                 return $this->redirectToRoute('home');
             }
         }
+        $parentpath = $filesManager->getParentPath($path);
         if (!empty($_SESSION['username']) === false) {
             return $this->redirectToRoute('home');
         }
         if (!empty($_FILES)) {
-            $filesManager = new FilesManager();
             $files = $_FILES['userfile']['name'];
             $title = $_POST['usertitle'];
             $ext = pathinfo($files, PATHINFO_EXTENSION);
@@ -143,6 +144,7 @@ class MainController extends BaseController
         $data = [
             'username' => $_SESSION['username'],
             'path' => $path,
+            'parentpath' => $parentpath,
         ];
         return $this->render('addfile.html.twig', $data);
     }
@@ -150,21 +152,23 @@ class MainController extends BaseController
     {
         global $path;
         $SecurityManager = new SecurityManager();
+        $filesManager = new FilesManager();
         if (empty($_GET['path']) === false) {
             $path = $_GET['path'];
             if ($SecurityManager->securePath($path, $_SESSION['username']) === false) {
                 return $this->redirectToRoute('home');
             }
         }
+        $parentpath = $filesManager->getParentPath($path);
         if (!empty($_GET['name'])) {
             $name = $_GET['name'];
-            $filesManager = new FilesManager();
             $type = $filesManager->getType($name, $path);
         }
         $data = [
             'username' => $_SESSION['username'],
             'type' => $type,
             'name' => $name,
+            'parentpath' => $parentpath,
         ];
         return $this->render('see.html.twig', $data);
     }
@@ -180,6 +184,7 @@ class MainController extends BaseController
                 return $this->redirectToRoute('home');
             }
         }
+        $parentpath = $filesManager->getParentPath($path);
         if (empty($_POST['content']) === false) {
             $content = $_POST['content'];
             $name = $_POST['name'];
@@ -203,6 +208,7 @@ class MainController extends BaseController
                 'type' => $type,
                 'name' => $name,
                 'path' => $path,
+                'parentpath' => $parentpath,
             ];
             return $this->render('write.html.twig', $data);
         }
