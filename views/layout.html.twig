@@ -10,7 +10,6 @@
         <nav>
           <input type="hidden" value={{path}}>
           {% if username is defined %}
-<<<<<<< HEAD
           <div class="navStyle">
             <a href="?action=home">
             <img  alt="Home" src="https://png.icons8.com/metro/1600/home.png" width="25" height="25">
@@ -33,15 +32,6 @@
             <a href="?action=login">Login</a>
             <a href="?action=register">Sign In</a>
               </div>
-=======
-            <a href="?action=home">home</a>
-            <a href='?action=addfile&path={{path}}'>addfile</a>
-            <a href='?action=addfolder&path={{path}}'>addfolder</a>
-            <a href="?action=disconnect">disconnect</a><br>
-          {% else %}
-            <a href="?action=login">login</a>
-            <a href="?action=register">register</a>
->>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
           {% endif %}
         </nav>
       </header>
