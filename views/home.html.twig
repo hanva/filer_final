@@ -12,11 +12,8 @@
         <a download={{file}} href={{paths[foo]}}> {{file}}</a>
         <a href='?action=home&deletefile={{file}}&path={{path}}'>
         <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
-
         <a href='?action=rename&name={{file}}&path={{path}}'>
-        <img alt="Delete" src="./assets/img/modify.png" width="20">
-        
-         </a>
+        <img alt="Modify" src="./assets/img/modify.png" width="20"></a>
         <a href='?action=move&path={{path}}&name={{file}}'> <img  width="22px" src="./assets/img/moveOne.png"></a>
         {% if valid[foo] == "valid" or valid[foo]== "text" %}
         <a href='?action=see&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/viewFile.png"></a>  
@@ -29,9 +26,9 @@
   {% endfor %}
     {% for folder in folders %}
       <a href='?action=home&path={{path}}{{folder}}'>{{folder}}</a>
-      <a href='?action=home&path={{path}}&deletefile={{folder}}'> ❌</a>
-      <a href='?action=rename&path={{path}}&name={{folder}}'> 🖊</a>
-      <a href='?action=move&path={{path}}&name={{folder}}'> <img  width="22px" src="./assets/img/move.png"></a>  <br> <br>
+      <a href='?action=home&path={{path}}&deletefile={{folder}}'> <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
+      <a href='?action=rename&path={{path}}&name={{folder}}'> <img alt="Modify" src="./assets/img/modify.png" width="20"></a>
+      <a href='?action=move&path={{path}}&name={{folder}}'> <img  width="22px" src="./assets/img/moveOne.png">  <br> <br>
   {% endfor %}
  {%if username is defined%}
     <a href='?action=home&path={{parentpath}}'>Back to the 90's</a>

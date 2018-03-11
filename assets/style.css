@@ -38,6 +38,18 @@ input[type=password] {
         outline: none;
     }
 
+input[type=file] {
+    
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 3px solid #ccc;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+        outline: none;
+    }
+
 input[type=text]:focus {
     border: 3px solid #555;
 }
@@ -45,6 +57,9 @@ input[type=email]:focus {
     border: 3px solid #555;
 }
 input[type=password]:focus {
+    border: 3px solid #555;
+}
+input[type=file]:focus {
     border: 3px solid #555;
 }
 .formRegisterStyle{
