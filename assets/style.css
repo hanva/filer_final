@@ -40,6 +40,7 @@ input[type=file] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
+    margin-top: 30px;
     box-sizing: border-box;
     border: 3px solid #ccc;
     -webkit-transition: 0.5s;
@@ -68,6 +69,15 @@ input[type=file]:focus {
     left: 40vw;
 }
 
+.margintop {
+    margin-top: 30px;
+}
+
+.formraddfile {
+    margin-top: 80px;
+    width: 25vw;
+}
+
 .btn {
     width: 100%;
     background-color: #555;
@@ -79,6 +89,7 @@ input[type=file]:focus {
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
+    margin-top: 30px;
     cursor: pointer;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
@@ -124,4 +135,77 @@ img:hover {
 
 img {
     vertical-align: middle;
+}
+
+.flex {
+    display: flex;
+}
+
+.row {
+    flex-direction: row;
+    margin-bottom: 30px;
+    width: 30vw;
+}
+
+.move {
+    position: absolute;
+    margin-left: 24vw;
+}
+
+.rename {
+    position: absolute;
+    margin-left: 27vw;
+}
+
+.see {
+    position: absolute;
+    margin-left: 30vw;
+}
+
+.write {
+    position: absolute;
+    margin-left: 33vw;
+}
+
+.delete {
+    position: absolute;
+    margin-left: 21vw;
+}
+
+.column {
+    flex-direction: column;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.center {
+    text-align: center;
+}
+
+.return {
+    margin-top: 20px;
+    margin-left: 48%;
+    width: auto;
+    position: absolute;
+}
+
+.started {
+    font-size: 40px;
+    text-align: center;
+    margin: auto;
+}
+
+.table {
+    padding-top: 8px;
+    width: 36vw;
+    min-height: 5vw;
+    max-height: 18vw;
+    position: relative;
+    margin-left: 32vw;
+    border: 1px solid black;
+    overflow-y: auto;
 }

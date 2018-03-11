@@ -4,10 +4,10 @@
 
 {% block content %}
 <div class="formRegisterStyle">
-<form enctype="multipart/form-data" action="?action=addfile" method="POST" name="fileform"> <br/><br/>
-    <input type="text"  id="usertitle" name="usertitle" placeholder="Title if needed"> <br/><br/>
-        <input type="file" id="userfile" name="userfile" /><br /><br/>
-        <input type="hidden" id="userfile" name="path" value='{{path}}'/><br/><br/>
+<form class="formraddfile" enctype="multipart/form-data" action="?action=addfile" method="POST" name="fileform"> 
+    <input type="text"  id="usertitle" name="usertitle" placeholder="Title if needed"> 
+        <input type="file" class="userfilebutton" id="userfile" name="userfile" />
+        <input type="hidden" id="userfile" name="path" value='{{path}}'/>
         <button type="submit" class="btn btn-primary">Add a file</button>
     </form>
 </div>

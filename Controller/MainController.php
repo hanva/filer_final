@@ -82,12 +82,9 @@ class MainController extends BaseController
                 $ext = pathinfo($_POST['oldname'], PATHINFO_EXTENSION);
                 $olddata = $_POST['oldname'];
                 $data = $_POST['newname'];
-                if ($SecurityManager->securePath($data, $_SESSION['username'], 0) === false) {
-                    return $this->redirectToRoute('home');
-                }
                 if (empty($_POST['path']) === false) {
                     $path = $_POST['path'];
-                    if ($SecurityManager->securePath($path, $_SESSION['username'], 1) === false) {
+                    if ($SecurityManager->securePath($path, $_SESSION['username'], 1) === false or $SecurityManager->securePath($data, $_SESSION['username'], 0) === false) {
                         return $this->redirectToRoute('home');
                     }
                 }

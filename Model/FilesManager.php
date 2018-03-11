@@ -189,7 +189,7 @@ class FilesManager
             unlink($dir . $name);
         } else {
             if (file_exists($folderpath . '/' . $name)) {
-                var_dump($dir . $name);
+                return;
             } else {
                 mkdir($folderpath . '/' . $name);
                 $objects = array_diff(scandir($dir . $name), array(".", ".."));

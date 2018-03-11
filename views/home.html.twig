@@ -3,36 +3,40 @@
 {% block page_title %}Filer{% endblock %}
 
 {% block content %}
-<h1>
-  Welcome {{ username }}
-  </h1>
-  <br>
+<h1 class="center">Welcome {{ username }}</h1>
+<br>
+<div class="flex column table">
+  {% if username is not defined %}
+  <p class="started"> To start, just login.</p>
+        {% endif %}
   {% set foo =  0 %}
   {% for file in files %}
+  <div class="flex row">
         <a download={{file}} href={{paths[foo]}}> <img  alt="File" src="https://png.icons8.com/metro/1600/file.png" width="20" height="20"> {{file}}</a>
-        <a href='?action=home&deletefile={{file}}&path={{path}}'>
-          <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
-        <a href='?action=rename&name={{file}}&path={{path}}'>
+        <a class="delete" href='?action=home&deletefile={{file}}&path={{path}}'>
+          <img  alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
+        <a class="rename" href='?action=rename&name={{file}}&path={{path}}'>
           <img alt="Rename" src="./assets/img/modify.png" width="20"></a>
-        <a href='?action=move&path={{path}}&name={{file}}'> <img  width="22px" src="./assets/img/moveOne.png"></a>
+        <a class="move" href='?action=move&path={{path}}&name={{file}}'> <img  width="22px" src="./assets/img/moveOne.png"></a>
         {% if valid[foo] == "valid" or valid[foo]== "text" %}
-        <a href='?action=see&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/viewFile.png"></a>  
+        <a class="see" href='?action=see&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/viewFile.png"></a>  
         {% endif %}
         {% if valid[foo] == "text" %}
-        <a href='?action=write&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/write.png"></a>
+        <a class="write" href='?action=write&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/write.png"></a>
         {% endif %}
-        <br>
+      </div>
         {% set foo = foo + 1 %}
   {% endfor %}
-  <br>
     {% for folder in folders %}
+    <div class="flex row">
       <a href='?action=home&path={{path}}{{folder}}'> <img alt="Folder" src="http://iconshow.me/media/images/ui/ios7-icons/png/512/folder-outline.png" width="25">{{folder}}</a>
-      <a href='?action=home&path={{path}}&deletefile={{folder}}'> <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
-      <a href='?action=rename&path={{path}}&name={{folder}}'> <img alt="Modify" src="./assets/img/modify.png" width="20"></a>
-      <a href='?action=move&path={{path}}&name={{folder}}'> <img  width="22px" src="./assets/img/moveOne.png"></a>
-      <br>
+      <a class="delete" href='?action=home&path={{path}}&deletefile={{folder}}'> <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
+      <a class="rename" href='?action=rename&path={{path}}&name={{folder}}'> <img alt="Modify" src="./assets/img/modify.png" width="20"></a>
+      <a class="move" href='?action=move&path={{path}}&name={{folder}}'> <img  width="22px" src="./assets/img/moveOne.png"></a>
+    </div>
   {% endfor %}
-  <footer>
-    <small>By Nicolas Tran & Karla Og</small>
-  </footer>   
+  </div>
+    {%if username is defined%}
+    <a  class="return center" href='?action=home&path={{parentpath}}'><img width="40px" src="./assets/img/return.png"></a>
+  {% endif %}
 {% endblock %}
