@@ -4,11 +4,13 @@
 
 {% block content %}
     {% if type[1] == "text" %}
+    <div class="formRegisterStyle">
         <form  action="?action=write" method="POST">
             <textarea name="content";>{{type[2]}}</textarea><br>
             <button type="submit" class="btn btn-primary">Write</button>
             <input name="path" type="hidden" value='{{path}}'>
             <input name="name" type="hidden" value='{{name}}' required>
         </form>
+        </div>
     {% endif %}
 {% endblock %}
