@@ -188,8 +188,8 @@ class FilesManager
             copy($dir . $name, $folderpath . '/' . $name);
             unlink($dir . $name);
         } else {
-            if (file_exists($folderpath . '/' . $name)) {
-                return;
+            if (file_exists($folderpath . '/ ' . $name) === true) {
+                return false;
             } else {
                 mkdir($folderpath . '/' . $name);
                 $objects = array_diff(scandir($dir . $name), array(".", ".."));
