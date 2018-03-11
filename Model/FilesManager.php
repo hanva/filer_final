@@ -84,7 +84,6 @@ class FilesManager
             if (is_file($dir . $value) === false) {
                 array_push($data, $value);
             }
-
         }
         return $data;
     }
@@ -206,7 +205,6 @@ class FilesManager
             } else {
                 rmdir('./files/' . $_SESSION['username'] . '/' . $name);
             }
-
         }
     }
 }

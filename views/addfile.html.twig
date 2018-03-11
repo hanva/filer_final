@@ -1,14 +1,14 @@
 {% extends 'layout.html.twig' %}
 
-{% block page_title %}Cool Framework{% endblock %}
+{% block page_title %}Filer{% endblock %}
 
 {% block content %}
-<div class="col">
-<form enctype="multipart/form-data" action="?action=addfile" method="POST" name="fileform" >   <br /><br />
-    <input type="text"  id="usertitle" name="usertitle" placeholder="title if needed">     <br /><br />
-        <input type="file" id="userfile" name="userfile" /><br /><br />
-        <input type="hidden" id="userfile" name="path" value='{{path}}' /><br /><br />
-        <button type="submit" class="btn btn-primary">Post</button>
+<div class="formRegisterStyle">
+<form enctype="multipart/form-data" action="?action=addfile" method="POST" name="fileform"> <br/><br/>
+    <input type="text"  id="usertitle" name="usertitle" placeholder="Title if needed"> <br/><br/>
+        <input type="file" id="userfile" name="userfile" /><br /><br/>
+        <input type="hidden" id="userfile" name="path" value='{{path}}'/><br/><br/>
+        <button type="submit" class="btn btn-primary">Add a file</button>
     </form>
 </div>
 {% endblock %}

@@ -1,22 +1,25 @@
 {% extends 'layout.html.twig' %}
 
-{% block page_title %}Cool Framework{% endblock %}
+{% block page_title %}Filer{% endblock %}
 
 {% block content %}
 <h1>
-  Welcome to the Cool Framework<br>
-  <small>By SUP'Internet DEV 2020</small>
-    {{ username }}
+  Welcome {{ username }}
   </h1>
   <br>
   {% set foo =  0 %}
   {% for file in files %}
         <a download={{file}} href={{paths[foo]}}> {{file}}</a>
-        <a href='?action=home&deletefile={{file}}&path={{path}}'>❌</a>
-        <a href='?action=rename&name={{file}}&path={{path}}'> 🖊</a>
-        <a href='?action=move&path={{path}}&name={{file}}'> <img  width="22px" src="./assets/img/move.png"></a>
+        <a href='?action=home&deletefile={{file}}&path={{path}}'>
+        <img alt="Delete" src="https://image.flaticon.com/icons/svg/63/63260.svg" width="22"></a>
+
+        <a href='?action=rename&name={{file}}&path={{path}}'>
+        <img alt="Delete" src="./assets/img/modify.png" width="20">
+        
+         </a>
+        <a href='?action=move&path={{path}}&name={{file}}'> <img  width="22px" src="./assets/img/moveOne.png"></a>
         {% if valid[foo] == "valid" or valid[foo]== "text" %}
-        <a href='?action=see&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/see.png"></a>  
+        <a href='?action=see&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/viewFile.png"></a>  
         {% endif %}
         {% if valid[foo] == "text" %}
         <a href='?action=write&path={{path}}&name={{file}}'><img  width="22px" src="./assets/img/write.png"></a>
@@ -33,4 +36,11 @@
  {%if username is defined%}
     <a href='?action=home&path={{parentpath}}'>Back to the 90's</a>
     {% endif %}
+<<<<<<< HEAD
+
+  <footer>
+    <small>By Nicolas Tran & Karla Og</small>
+  </footer>   
+=======
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
 {% endblock %}

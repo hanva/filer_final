@@ -10,6 +10,30 @@
         <nav>
           <input type="hidden" value={{path}}>
           {% if username is defined %}
+<<<<<<< HEAD
+          <div class="navStyle">
+            <a href="?action=home">
+            <img  alt="Home" src="https://png.icons8.com/metro/1600/home.png" width="25" height="25">
+            Home
+            </a>
+            <a href='?action=addfile&path={{path}}'>
+            <img  alt="File" src="https://cdn3.iconfinder.com/data/icons/files/100/237034-file_document_add_plus-512.png" width="25" height="25">
+            Add a file
+            </a>
+            <a href='?action=addfolder&path={{path}}'>
+            <img alt="Folder" src="https://cdn3.iconfinder.com/data/icons/files/100/237046-folder_add_plus-512.png"width="25" height="25">
+            Add a folder</a>
+          
+            
+            <a class="navStyle alignSelf" href="?action=disconnect"> 
+          <img alt="Sing Out" src="https://cdn0.iconfinder.com/data/icons/glyph-2-ui-part-1-of-4/100/pack02-05-512.png" width="25" height="25">
+          Logout</a><br>
+
+          {% else %}
+            <a href="?action=login">Login</a>
+            <a href="?action=register">Sign In</a>
+              </div>
+=======
             <a href="?action=home">home</a>
             <a href='?action=addfile&path={{path}}'>addfile</a>
             <a href='?action=addfolder&path={{path}}'>addfolder</a>
@@ -17,6 +41,7 @@
           {% else %}
             <a href="?action=login">login</a>
             <a href="?action=register">register</a>
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
           {% endif %}
         </nav>
       </header>

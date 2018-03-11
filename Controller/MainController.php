@@ -1,5 +1,4 @@
 <?php
-
 require_once 'Cool/BaseController.php';
 require_once 'Model/FormManager.php';
 require_once 'Model/FilesManager.php';
@@ -267,7 +266,10 @@ class MainController extends BaseController
         } else {
             return $this->redirectToRoute('home');
         }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 05b917d8836f47538bbf36008ac9849ab86eea08
     }
     public function loginAction()
     {
@@ -287,7 +289,6 @@ class MainController extends BaseController
             return $this->render('login.html.twig');
         }
     }
-
     public function registerAction()
     {
         if (!empty($_POST['firstname']) && !empty($_POST['lastname'])
